@@ -1,0 +1,296 @@
+.myb {
+  border: solid 1px orangered;
+}
+.myb2 {
+  border: dotted 1px deepskyblue;
+}
+.myb3 {
+  border: solid 2px gold;
+}
+.myb4 {
+  border: solid 3px plum;
+}
+.myb5 {
+  border: solid 5px mediumpurple;
+}
+.myb6 {
+  border: dashed 1px mediumpurple;
+}
+.bg{
+    background: cadetblue;
+}
+.bg1{
+    background: gold;
+}
+.bg2{
+    background: sandybrown;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  font-size: 12px;
+  font-family: "微软雅黑";
+  color: #666;
+  background: #fff;
+}
+body ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+body a {
+  text-decoration: none;
+  color: #666;
+}
+body a:hover{
+    color: #ec5563;
+}
+.blankBox {
+  clear: both;
+}
+.myHide {
+  display: none;
+}
+.FS10 {
+  font-size: 10px;
+}
+.FS12 {
+  font-size: 12px;
+}
+.FS14 {
+  font-size: 14px;
+}
+.FS16 {
+  font-size: 16px;
+}
+.FS18 {
+  font-size: 16px;
+}
+.floatL {
+  float: left;
+}
+.floatR {
+  float: right;
+}
+.MT5 {
+  margin-top: 5px;
+}
+.MT10 {
+  margin-top: 10px;
+}
+.MT15 {
+  margin-top: 15px;
+}
+.MT20 {
+  margin-top: 20px;
+}
+.MT30 {
+  margin-top: 30px;
+}
+.MB5 {
+  margin-bottom: 5px;
+}
+.MB10 {
+  margin-bottom: 10px;
+}
+.MB15 {
+  margin-bottom: 15px;
+}
+.MB20 {
+  margin-bottom: 20px;
+}
+.MB30 {
+  margin-bottom: 30px;
+}
+.ML5 {
+  margin-left: 5px;
+}
+.ML10 {
+  margin-left: 10px;
+}
+.ML15 {
+  margin-left: 15px;
+}
+.ML20 {
+  margin-left: 20px;
+}
+.ML30 {
+  margin-left: 30px;
+}
+.MR5 {
+  margin-right: 5px;
+}
+.MR10 {
+  margin-right: 10px;
+}
+.MR15 {
+  margin-right: 15px;
+}
+.MR20 {
+  margin-right: 20px;
+}
+.MR30 {
+  margin-right: 30px;
+}
+.gary666 {
+  color: #666;
+}
+.gary999 {
+  color: #999;
+}
+.garyccc {
+  color: #ccc;
+}
+.FCenter {
+  text-align: center;
+}
+.MCenter {
+  margin: 0 auto;
+}
+.t20 {
+  font-size: 20px;
+  font-family: "微软雅黑";
+}
+.t14 {
+  font-size: 14px;
+  font-family: "微软雅黑";
+}
+.block {
+  display: block;
+}
+.bold {
+  font-weight: bold;
+}
+/*@font-face {
+  font-family: "方正正中黑";
+  src: url("../font/方正正中黑.TTF");
+}*/
+/*
+ *  项目css部分
+ */
+
+
+
+
+
+.Box{
+    width:100%;
+    background: #f3f3f3;
+}
+.BoxL{
+    width:30%;
+    height:100%;
+    background: #0068b7;
+    float: left;
+    font-size: 32px;
+    font-family: "微软雅黑";
+    color:#fff;
+    text-align: center;
+    position: relative;
+    z-index:99;
+}
+.BoxR{
+    width:70%;
+    height:100%;
+    background: #fff;
+    float: right;
+    position: relative;
+}
+.BoxLT{
+    margin-top: 40%;
+}
+.BoxLA{
+    width:7px;
+    height:10px;
+    background: url("../image/arrow.png");
+    float:right;
+    position: relative;
+    right:-7px;
+    top:-25px;
+}
+.BoxRCon{
+    width:250px;
+    height:220px;
+    position: absolute;
+    top:20%;
+    left:20%;
+}
+.bg1{
+    background: #eee;
+}
+.fishT{
+    width:100%;
+    height:22px;
+    font-size: 22px;
+    color:#0068b7;
+    text-align: center;
+}
+.line1{
+    width:100%;
+    height:24px;
+    line-height: 24px;
+}
+.line1 i{
+    display: block;
+    width:30px;
+    height:18px;
+    background: url("../image/icon.png") no-repeat 0 2px;
+    float:left;
+}
+.line1 div{
+    float:left;
+    width:40px;
+    text-align: right;
+}
+.line1 span{
+    display: block;
+    float:right;
+    width:170px;
+    height:24px;
+    overflow: hidden;
+}
+.line1 span input{
+    width:100%;
+    background: none;
+    border: 0px;
+    border-bottom: solid 1px #666;
+    height: 20px;
+}
+.line1.mod i{
+    display: block;
+    width:30px;
+    height:20px;
+    background: url("../image/icon.png") no-repeat 0 -36px;
+    float:left;
+}
+.line1.mod i.myhide{
+    background: none;
+}
+.lala input{
+    width:70px;
+    margin-left: 10px;
+}
+b.xixi{
+    width:70px;
+    height: 24px;
+    background: #eeeeee;
+    margin-left: 10px;
+    display: block;
+    float: right;
+    margin-right: 10px;
+    text-align: center;
+    cursor: pointer;
+    color:#a40000;
+}
+.btn{
+    width:222px;
+    background:#0068b7;
+    float:right;
+    height:42px;
+    color:#fff;
+    text-align: center;
+    line-height: 42px;
+    cursor: pointer;
+}
