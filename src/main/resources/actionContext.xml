@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-autowire="byName">
+
+	<!-- 登录登出的Action -->
+	<bean id="login" class="com.dihaitech.oa.controller.action.common.LoginAction"
+		scope="prototype">
+	</bean>
+	
+	<!-- 用户个人信息Action -->
+	<bean id="userInfo" class="com.dihaitech.oa.controller.action.common.UserAction"
+		scope="prototype">
+	</bean>
+
+
+
+	  <!-- 管理员 action -->
+	  <bean id="managerAction" class="com.dihaitech.oa.controller.action.manager.ManagerAction" scope="prototype">
+			<property name="managerService">
+				<ref bean="managerService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 角色 action -->
+	  <bean id="roleAction" class="com.dihaitech.oa.controller.action.role.RoleAction" scope="prototype">
+			<property name="roleService">
+				<ref bean="roleService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 菜单 action -->
+	  <bean id="menuAction" class="com.dihaitech.oa.controller.action.menu.MenuAction" scope="prototype">
+			<property name="menuService">
+				<ref bean="menuService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 目录 action -->
+	  <bean id="catalogAction" class="com.dihaitech.oa.controller.action.catalog.CatalogAction" scope="prototype">
+			<property name="catalogService">
+				<ref bean="catalogService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 模块 action -->
+	  <bean id="moduleAction" class="com.dihaitech.oa.controller.action.module.ModuleAction" scope="prototype">
+			<property name="moduleService">
+				<ref bean="moduleService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 市 action -->
+	  <bean id="cityAction" class="com.dihaitech.oa.controller.action.city.CityAction" scope="prototype">
+			<property name="cityService">
+				<ref bean="cityService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 省 action -->
+	  <bean id="provinceAction" class="com.dihaitech.oa.controller.action.province.ProvinceAction" scope="prototype">
+			<property name="provinceService">
+				<ref bean="provinceService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 区 action -->
+	  <bean id="areaAction" class="com.dihaitech.oa.controller.action.area.AreaAction" scope="prototype">
+			<property name="areaService">
+				<ref bean="areaService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 日志 action -->
+	  <bean id="logsAction" class="com.dihaitech.oa.controller.action.logs.LogsAction" scope="prototype">
+			<property name="logsService">
+				<ref bean="logsService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 字典 action -->
+	  <bean id="dictAction" class="com.dihaitech.oa.controller.action.dict.DictAction" scope="prototype">
+			<property name="dictService">
+				<ref bean="dictService" />
+			</property>
+	  </bean>
+	  
+</beans>

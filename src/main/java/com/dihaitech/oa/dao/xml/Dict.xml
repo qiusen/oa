@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IDictDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="dictLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="code != null and code != ''">
+			    and `CODE` like '%${code}%'
+		    </if>
+	        <if test ="name != null and name != ''">
+			    and `NAME` like '%${name}%'
+		    </if>
+	        <if test ="group != null and group != ''">
+			    and `GROUP` like '%${group}%'
+		    </if>
+	        <if test ="value != null and value != ''">
+			    and `VALUE` like '%${value}%'
+		    </if>
+	        <if test ="createuser != null and createuser != ''">
+			    and `CREATEUSER` like '%${createuser}%'
+		    </if>
+	        <if test ="updateuser != null and updateuser != ''">
+			    and `UPDATEUSER` like '%${updateuser}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="dictPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="dictField">
+		`ID`, `CODE`, `NAME`, `GROUP`, `VALUE`, `CREATEUSER`, `CREATETIME`, `UPDATEUSER`, `UPDATETIME`
+	</sql>
+	
+	<resultMap id="dictMap" type="dict">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="code" column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="name" column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="group" column="GROUP" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="value" column="VALUE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="createuser" column="CREATEUSER" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="updateuser" column="UPDATEUSER" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="updatetime" column="UPDATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="addSaveDict" parameterType="dict">
+		insert into `dict` (
+           `CODE`, 
+           `NAME`, 
+           `GROUP`, 
+           `VALUE`, 
+           `CREATEUSER`, 
+           `CREATETIME`, 
+           `UPDATEUSER`, 
+           `UPDATETIME`
+		) values 
+		(
+            #{code}, 
+            #{name}, 
+            #{group}, 
+            #{value}, 
+            #{createuser}, 
+            #{createtime}, 
+            #{updateuser}, 
+            #{updatetime}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `dict` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `dict` ${_parameter}
+	</delete>
+	
+	<update id="editSaveDict" parameterType="dict">
+		update `dict` set 
+              `CODE` = #{code}, 
+              `NAME` = #{name}, 
+              `GROUP` = #{group}, 
+              `VALUE` = #{value}, 
+              `UPDATEUSER` = #{updateuser}, 
+              `UPDATETIME` = #{updatetime}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectDictById" parameterType="dict" resultMap="dictMap"  >
+		SELECT * FROM `dict` where ID = #{id}
+	</select>
+	
+	<select id="getDictCount" parameterType="dict" resultType="Long" >
+		select count(*) from `dict`
+		<include refid="dictLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="dict" resultMap="dictMap" >
+		select * from `dict`
+	</select>
+	
+	<select id="selectDictLike" parameterType="dict" resultMap="dictMap" >
+		SELECT <include refid="dictField" /> FROM `dict`
+	        <include refid="dictLikeWhere" />
+			order by ID desc
+	        <include refid="dictPage" /> 
+	</select>
+</mapper>

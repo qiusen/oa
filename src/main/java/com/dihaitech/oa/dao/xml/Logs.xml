@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.ILogsDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="logsLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="username != null and username != ''">
+			    and `USERNAME` like '%${username}%'
+		    </if>
+	        <if test ="nickname != null and nickname != ''">
+			    and `NICKNAME` like '%${nickname}%'
+		    </if>
+	        <if test ="ip != null and ip != ''">
+			    and `IP` like '%${ip}%'
+		    </if>
+	        <if test ="act != null and act != ''">
+			    and `ACT` like '%${act}%'
+		    </if>
+	        <if test ="content != null and content != ''">
+			    and `CONTENT` like '%${content}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="logsPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="logsField">
+		`ID`, `USERNAME`, `NICKNAME`, `IP`, `ACT`, `OPTTIME`, `CONTENT`
+	</sql>
+	
+	<resultMap id="logsMap" type="logs">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="username" column="USERNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="nickname" column="NICKNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="ip" column="IP" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="act" column="ACT" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="opttime" column="OPTTIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="content" column="CONTENT" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="addSaveLogs" parameterType="logs">
+		insert into `logs` (
+           `USERNAME`, 
+           `NICKNAME`, 
+           `IP`, 
+           `ACT`, 
+           `OPTTIME`, 
+           `CONTENT`
+		) values 
+		(
+            #{username}, 
+            #{nickname}, 
+            #{ip}, 
+            #{act}, 
+            #{opttime}, 
+            #{content}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `logs` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `logs` ${_parameter}
+	</delete>
+	
+	<update id="editSaveLogs" parameterType="logs">
+		update `logs` set 
+              `USERNAME` = #{username}, 
+              `NICKNAME` = #{nickname}, 
+              `IP` = #{ip}, 
+              `ACT` = #{act}, 
+              `OPTTIME` = #{opttime}, 
+              `CONTENT` = #{content}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectLogsById" parameterType="logs" resultMap="logsMap"  >
+		SELECT * FROM `logs` where ID = #{id}
+	</select>
+	
+	<select id="getLogsCount" parameterType="logs" resultType="Long" >
+		select count(*) from `logs`
+		<include refid="logsLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="logs" resultMap="logsMap" >
+		select * from `logs`
+	</select>
+	
+	<select id="selectLogsLike" parameterType="logs" resultMap="logsMap" >
+		SELECT <include refid="logsField" /> FROM `logs`
+	        <include refid="logsLikeWhere" />
+			order by ID desc
+	        <include refid="logsPage" /> 
+	</select>
+</mapper>

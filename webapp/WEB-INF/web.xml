@@ -19,7 +19,7 @@
     <!-- 编码过滤器 -->
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
-		<filter-class>com.dihaitech.acomp.controller.filter.CharacterEncodingFilter</filter-class>
+		<filter-class>com.dihaitech.oa.controller.filter.CharacterEncodingFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -29,7 +29,7 @@
 	<!-- SESSION过滤器 -->
 	<filter>
 		<filter-name>sessionFilter</filter-name>
-		<filter-class>com.dihaitech.acomp.controller.filter.SessionFilter</filter-class>
+		<filter-class>com.dihaitech.oa.controller.filter.SessionFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>sessionFilter</filter-name>
@@ -102,7 +102,7 @@
 	<!-- Get Check Code Image -->
 	<servlet>
 		<servlet-name>getcheckimage</servlet-name>
-		<servlet-class>com.dihaitech.acomp.controller.servlet.CheckImageServlet</servlet-class>
+		<servlet-class>com.dihaitech.oa.controller.servlet.CheckImageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>getcheckimage</servlet-name>
@@ -112,7 +112,7 @@
 	<!-- Kindeditor Upload File Use -->
 	<servlet>
 		<servlet-name>uploadJson</servlet-name>
-		<servlet-class>com.dihaitech.acomp.controller.servlet.kindeditor.UploadJsonServlet</servlet-class>
+		<servlet-class>com.dihaitech.oa.controller.servlet.kindeditor.UploadJsonServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>uploadJson</servlet-name>
@@ -121,7 +121,7 @@
 	
 	<servlet>
 		<servlet-name>fileManagerJson</servlet-name>
-		<servlet-class>com.dihaitech.acomp.controller.servlet.kindeditor.FileManagerJsonServlet</servlet-class>
+		<servlet-class>com.dihaitech.oa.controller.servlet.kindeditor.FileManagerJsonServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>fileManagerJson</servlet-name>
@@ -133,7 +133,7 @@
 	<!-- test upload servlet -->
 	<servlet>
 		<servlet-name>fileUploadServlet</servlet-name>
-		<servlet-class>com.dihaitech.acomp.controller.servlet.FileUploadServlet</servlet-class>
+		<servlet-class>com.dihaitech.oa.controller.servlet.FileUploadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>fileUploadServlet</servlet-name>

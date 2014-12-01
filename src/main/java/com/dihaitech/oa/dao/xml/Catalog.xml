@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.ICatalogDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="catalogLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="catalogname != null and catalogname != ''">
+			    and `CATALOGNAME` like '%${catalogname}%'
+		    </if>
+            <if test ="status != null and status > -1">
+				and `STATUS` = #{status}
+			</if>
+            <if test ="ordernum != null and ordernum > -1">
+				and `ORDERNUM` = #{ordernum}
+			</if>
+            <if test ="menuId != null and menuId > -1">
+				and `MENU_ID` = #{menuId}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="catalogPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="catalogField">
+		`ID`, `CATALOGNAME`, `STATUS`, `ORDERNUM`, `MENU_ID`, `CREATETIME`
+	</sql>
+	
+	<resultMap id="catalogMap" type="catalog">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="catalogname" column="CATALOGNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="status" column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="ordernum" column="ORDERNUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="menuId" column="MENU_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="addSaveCatalog" parameterType="catalog">
+		insert into `catalog` (
+           `CATALOGNAME`, 
+           `STATUS`, 
+           `ORDERNUM`, 
+           `MENU_ID`, 
+           `CREATETIME`
+		) values 
+		(
+            #{catalogname}, 
+            #{status}, 
+            #{ordernum}, 
+            #{menuId}, 
+            #{createtime}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `catalog` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `catalog` ${_parameter}
+	</delete>
+	
+	<update id="editSaveCatalog" parameterType="catalog">
+		update `catalog` set 
+              `CATALOGNAME` = #{catalogname}, 
+              `STATUS` = #{status}, 
+              `ORDERNUM` = #{ordernum}, 
+              `MENU_ID` = #{menuId}, 
+              `CREATETIME` = #{createtime}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectCatalogById" parameterType="catalog" resultMap="catalogMap"  >
+		SELECT * FROM `catalog` where ID = #{id}
+	</select>
+	
+	<select id="getCatalogCount" parameterType="catalog" resultType="Long" >
+		select count(*) from `catalog`
+		<include refid="catalogLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="catalog" resultMap="catalogMap" >
+		select * from `catalog`
+	</select>
+	
+	<select id="selectCatalogLike" parameterType="catalog" resultMap="catalogMap" >
+		SELECT <include refid="catalogField" /> FROM `catalog`
+	        <include refid="catalogLikeWhere" />
+			order by ID desc
+	        <include refid="catalogPage" /> 
+	</select>
+	
+	<select id="selectCatalogByIdsStatus" parameterType="catalog" resultMap="catalogMap" >
+		SELECT <include refid="catalogField" /> FROM `catalog`
+	        ${idStr} and STATUS = #{status}
+			order by ORDERNUM,ID
+	</select>
+	
+	<select id="selectAllByStatus" parameterType="catalog" resultMap="catalogMap" >
+		SELECT <include refid="catalogField" /> FROM `catalog`
+	        where STATUS = #{status}
+			order by MENU_ID, ORDERNUM,ID
+	</select>
+	
+	<select id="selectAllByMenuStatus" parameterType="catalog" resultMap="catalogMap" >
+		SELECT <include refid="catalogField" /> FROM `catalog`
+	        where MENU_ID = #{menuId} and `STATUS` = #{status}
+			order by ORDERNUM,ID
+	</select>
+</mapper>

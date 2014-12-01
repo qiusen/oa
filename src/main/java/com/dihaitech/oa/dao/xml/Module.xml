@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IModuleDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="moduleLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="modulename != null and modulename != ''">
+			    and `MODULENAME` like '%${modulename}%'
+		    </if>
+	        <if test ="moduleurl != null and moduleurl != ''">
+			    and `MODULEURL` like '%${moduleurl}%'
+		    </if>
+	        <if test ="moduleact != null and moduleact != ''">
+			    and `MODULEACT` like '%${moduleact}%'
+		    </if>
+            <if test ="catalogId != null and catalogId > -1">
+				and `CATALOG_ID` = #{catalogId}
+			</if>
+            <if test ="status != null and status > -1">
+				and `STATUS` = #{status}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="modulePage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="moduleField">
+		`ID`, `MODULENAME`, `MODULEURL`, `MODULEACT`, `CATALOG_ID`, `STATUS`, `CREATETIME`
+	</sql>
+	
+	<resultMap id="moduleMap" type="module">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="modulename" column="MODULENAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="moduleurl" column="MODULEURL" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="moduleact" column="MODULEACT" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="catalogId" column="CATALOG_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="status" column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="addSaveModule" parameterType="module">
+		insert into `module` (
+           `MODULENAME`, 
+           `MODULEURL`, 
+           `MODULEACT`, 
+           `CATALOG_ID`, 
+           `STATUS`, 
+           `CREATETIME`
+		) values 
+		(
+            #{modulename}, 
+            #{moduleurl}, 
+            #{moduleact}, 
+            #{catalogId}, 
+            #{status}, 
+            #{createtime}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `module` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `module` ${_parameter}
+	</delete>
+	
+	<update id="editSaveModule" parameterType="module">
+		update `module` set 
+              `MODULENAME` = #{modulename}, 
+              `MODULEURL` = #{moduleurl}, 
+              `MODULEACT` = #{moduleact}, 
+              `CATALOG_ID` = #{catalogId}, 
+              `STATUS` = #{status}, 
+              `CREATETIME` = #{createtime}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectModuleById" parameterType="module" resultMap="moduleMap"  >
+		SELECT * FROM `module` where ID = #{id}
+	</select>
+	
+	<select id="getModuleCount" parameterType="module" resultType="Long" >
+		select count(*) from `module`
+		<include refid="moduleLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="module" resultMap="moduleMap" >
+		select * from `module`
+	</select>
+	
+	<select id="selectModuleLike" parameterType="module" resultMap="moduleMap" >
+		SELECT <include refid="moduleField" /> FROM `module`
+	        <include refid="moduleLikeWhere" />
+			order by ID desc
+	        <include refid="modulePage" /> 
+	</select>
+	
+	<select id="selectModuleByIdStr" parameterType="module" resultMap="moduleMap" >
+		SELECT <include refid="moduleField" /> FROM `module`
+	        where STATUS = #{status} and ID in (${idStr})
+			order by ID 
+	</select>
+	
+	<select id="selectAllByStatus" parameterType="module" resultMap="moduleMap" >
+		SELECT <include refid="moduleField" /> FROM `module`
+	        where STATUS = #{status}
+			order by ID 
+	</select>
+</mapper>

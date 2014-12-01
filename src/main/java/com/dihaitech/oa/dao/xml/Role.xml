@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IRoleDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="roleLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="rolename != null and rolename != ''">
+			    and `ROLENAME` like '%${rolename}%'
+		    </if>
+            <if test ="status != null and status > -1">
+				and `STATUS` = #{status}
+			</if>
+	        <if test ="rights != null and rights != ''">
+			    and `RIGHTS` like '%${rights}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="rolePage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="roleField">
+		`ID`, `ROLENAME`, `STATUS`, `CREATETIME`, `RIGHTS`
+	</sql>
+	
+	<resultMap id="roleMap" type="role">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="rolename" column="ROLENAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="status" column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="rights" column="RIGHTS" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="addSaveRole" parameterType="role">
+		insert into `role` (
+           `ROLENAME`, 
+           `STATUS`, 
+           `CREATETIME`, 
+           `RIGHTS`
+		) values 
+		(
+            #{rolename}, 
+            #{status}, 
+            #{createtime}, 
+            #{rights}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `role` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `role` ${_parameter}
+	</delete>
+	
+	<update id="editSaveRole" parameterType="role">
+		update `role` set 
+              `ROLENAME` = #{rolename}, 
+              `STATUS` = #{status}, 
+              `CREATETIME` = #{createtime}, 
+              `RIGHTS` = #{rights}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectRoleById" parameterType="role" resultMap="roleMap"  >
+		SELECT * FROM `role` where ID = #{id}
+	</select>
+	
+	<select id="getRoleCount" parameterType="role" resultType="Long" >
+		select count(*) from `role`
+		<include refid="roleLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="role" resultMap="roleMap" >
+		select * from `role`
+	</select>
+	
+	<select id="selectRoleLike" parameterType="role" resultMap="roleMap" >
+		SELECT <include refid="roleField" /> FROM `role`
+	        <include refid="roleLikeWhere" />
+			order by ID desc
+	        <include refid="rolePage" /> 
+	</select>
+	
+	<select id="selectAllByStatus" parameterType="role" resultMap="roleMap" >
+		SELECT <include refid="roleField" /> FROM `role`
+	        where `STATUS` = #{status}
+			order by ID  
+	</select>
+	
+	<update id="editRights" parameterType="role">
+		update role set 
+              RIGHTS = #{rights}
+        	where ID = #{id}
+	</update>
+</mapper>

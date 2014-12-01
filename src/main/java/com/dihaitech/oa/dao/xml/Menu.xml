@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IMenuDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="menuLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="menuname != null and menuname != ''">
+			    and `MENUNAME` like '%${menuname}%'
+		    </if>
+            <if test ="status != null and status > -1">
+				and `STATUS` = #{status}
+			</if>
+            <if test ="ordernum != null and ordernum > -1">
+				and `ORDERNUM` = #{ordernum}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="menuPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="menuField">
+		`ID`, `MENUNAME`, `STATUS`, `ORDERNUM`, `CREATETIME`
+	</sql>
+	
+	<resultMap id="menuMap" type="menu">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="menuname" column="MENUNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="status" column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="ordernum" column="ORDERNUM" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="addSaveMenu" parameterType="menu">
+		insert into `menu` (
+           `MENUNAME`, 
+           `STATUS`, 
+           `ORDERNUM`, 
+           `CREATETIME`
+		) values 
+		(
+            #{menuname}, 
+            #{status}, 
+            #{ordernum}, 
+            #{createtime}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `menu` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `menu` ${_parameter}
+	</delete>
+	
+	<update id="editSaveMenu" parameterType="menu">
+		update `menu` set 
+              `MENUNAME` = #{menuname}, 
+              `STATUS` = #{status}, 
+              `ORDERNUM` = #{ordernum}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectMenuById" parameterType="menu" resultMap="menuMap"  >
+		SELECT * FROM `menu` where ID = #{id}
+	</select>
+	
+	<select id="getMenuCount" parameterType="menu" resultType="Long" >
+		select count(*) from `menu`
+		<include refid="menuLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="menu" resultMap="menuMap" >
+		select * from `menu`
+	</select>
+	
+	<select id="selectMenuLike" parameterType="menu" resultMap="menuMap" >
+		SELECT <include refid="menuField" /> FROM `menu`
+	        <include refid="menuLikeWhere" />
+			order by ID desc
+	        <include refid="menuPage" /> 
+	</select>
+	
+	<select id="selectMenuByIdsStatus" parameterType="menu" resultMap="menuMap" >
+		SELECT <include refid="menuField" /> FROM `menu`
+	        ${idStr} and `STATUS` = #{status}
+	        order by ORDERNUM,ID
+	</select>
+	
+	<select id="selectAllByStatus" parameterType="menu" resultMap="menuMap" >
+		SELECT <include refid="menuField" /> FROM `menu`
+	        where `STATUS` = #{status}
+	        order by ORDERNUM,ID
+	</select>
+</mapper>

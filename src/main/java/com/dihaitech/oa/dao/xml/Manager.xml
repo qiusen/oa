@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IManagerDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="managerLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="username != null and username != ''">
+			    and `USERNAME` like '%${username}%'
+		    </if>
+	        <if test ="password != null and password != ''">
+			    and `PASSWORD` like '%${password}%'
+		    </if>
+	        <if test ="email != null and email != ''">
+			    and `EMAIL` like '%${email}%'
+		    </if>
+	        <if test ="nickname != null and nickname != ''">
+			    and `NICKNAME` like '%${nickname}%'
+		    </if>
+            <if test ="status != null and status > -1">
+				and `STATUS` = #{status}
+			</if>
+            <if test ="roleId != null and roleId > -1">
+				and `ROLE_ID` = #{roleId}
+			</if>
+	        <if test ="creator != null and creator != ''">
+			    and `CREATOR` like '%${creator}%'
+		    </if>
+	        <if test ="loginip != null and loginip != ''">
+			    and `LOGINIP` like '%${loginip}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="managerPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="managerField">
+		`ID`, `USERNAME`, `PASSWORD`, `EMAIL`, `NICKNAME`, `STATUS`, `ROLE_ID`, `CREATOR`, `CREATETIME`, `LOGINTIME`, `LOGINIP`
+	</sql>
+	
+	<resultMap id="managerMap" type="manager">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="username" column="USERNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="password" column="PASSWORD" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="email" column="EMAIL" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="nickname" column="NICKNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="status" column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="roleId" column="ROLE_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="creator" column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="logintime" column="LOGINTIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="loginip" column="LOGINIP" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="addSaveManager" parameterType="manager">
+		insert into `manager` (
+           `USERNAME`, 
+           `PASSWORD`, 
+           `EMAIL`, 
+           `NICKNAME`, 
+           `STATUS`, 
+           `ROLE_ID`, 
+           `CREATOR`, 
+           `CREATETIME`, 
+           `LOGINTIME`, 
+           `LOGINIP`
+		) values 
+		(
+            #{username}, 
+            #{password}, 
+            #{email}, 
+            #{nickname}, 
+            #{status}, 
+            #{roleId}, 
+            #{creator}, 
+            #{createtime}, 
+            #{logintime}, 
+            #{loginip}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `manager` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `manager` ${_parameter}
+	</delete>
+	
+	<update id="editSaveManager" parameterType="manager">
+		update `manager` set 
+              `USERNAME` = #{username}, 
+              `PASSWORD` = #{password}, 
+              `EMAIL` = #{email}, 
+              `NICKNAME` = #{nickname}, 
+              `STATUS` = #{status}, 
+              `ROLE_ID` = #{roleId}, 
+              `LOGINTIME` = #{logintime}, 
+              `LOGINIP` = #{loginip}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectManagerById" parameterType="manager" resultMap="managerMap"  >
+		SELECT * FROM `manager` where ID = #{id}
+	</select>
+	
+	<select id="getManagerCount" parameterType="manager" resultType="Long" >
+		select count(*) from `manager`
+		<include refid="managerLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="manager" resultMap="managerMap" >
+		select * from `manager`
+	</select>
+	
+	<select id="selectManagerLike" parameterType="manager" resultMap="managerMap" >
+		SELECT <include refid="managerField" /> FROM `manager`
+	        <include refid="managerLikeWhere" />
+			order by ID desc
+	        <include refid="managerPage" /> 
+	</select>
+	
+	<select id="login" parameterType="manager" resultMap="managerMap" >
+	     SELECT <include refid="managerField" /> FROM `manager`
+	     where USERNAME= #{username} and PASSWORD = #{password} 
+	</select>
+	
+	<update id="editSaveManagerById" parameterType="manager">
+		update `manager` set 
+              `LOGINTIME` = #{logintime}, 
+              `LOGINIP` = #{loginip}
+        	where ID = #{id}
+	</update>
+	
+	<update id="editSaveUser" parameterType="manager">
+		update `manager` set 
+              `EMAIL` = #{email}, 
+              `NICKNAME` = #{nickname}
+        	where ID = #{id}
+	</update>
+	
+	<update id="editSavePassword" parameterType="manager">
+		update `manager` set 
+              `PASSWORD` = #{password}
+        	where ID = #{id}
+	</update>
+</mapper>

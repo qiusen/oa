@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.ICityDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="cityLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="code != null and code != ''">
+			    and `CODE` like '%${code}%'
+		    </if>
+	        <if test ="name != null and name != ''">
+			    and `NAME` like '%${name}%'
+		    </if>
+	        <if test ="provinceCode != null and provinceCode != ''">
+			    and `PROVINCE_CODE` like '%${provinceCode}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="cityPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="cityField">
+		`ID`, `CODE`, `NAME`, `PROVINCE_CODE`
+	</sql>
+	
+	<resultMap id="cityMap" type="city">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="code" column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="name" column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="provinceCode" column="PROVINCE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="addSaveCity" parameterType="city">
+		insert into `city` (
+           `CODE`, 
+           `NAME`, 
+           `PROVINCE_CODE`
+		) values 
+		(
+            #{code}, 
+            #{name}, 
+            #{provinceCode}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `city` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `city` ${_parameter}
+	</delete>
+	
+	<update id="editSaveCity" parameterType="city">
+		update `city` set 
+              `CODE` = #{code}, 
+              `NAME` = #{name}, 
+              `PROVINCE_CODE` = #{provinceCode}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectCityById" parameterType="city" resultMap="cityMap"  >
+		SELECT * FROM `city` where ID = #{id}
+	</select>
+	
+	<select id="getCityCount" parameterType="city" resultType="Long" >
+		select count(*) from `city`
+		<include refid="cityLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="city" resultMap="cityMap" >
+		select * from `city`
+	</select>
+	
+	<select id="selectCityLike" parameterType="city" resultMap="cityMap" >
+		SELECT <include refid="cityField" /> FROM `city`
+	        <include refid="cityLikeWhere" />
+			order by ID
+	        <include refid="cityPage" /> 
+	</select>
+	
+	<select id="selectCityByProvinceCode" parameterType="city" resultMap="cityMap"  >
+		SELECT * FROM `city` 
+		where PROVINCE_CODE = #{provinceCode}
+		order by ID
+	</select>
+	
+	<select id="selectCityByCodes" parameterType="city" resultMap="cityMap"  >
+		SELECT * FROM `city` 
+		where CODE in (${idStr})
+		order by ID
+	</select>
+	
+	<select id="selectCityByCode" parameterType="city" resultMap="cityMap"  >
+		SELECT * FROM `city` 
+		where CODE = #{code}
+		order by ID
+	</select>
+</mapper>

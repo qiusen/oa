@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 公用的Action Begin -->
+	<package name="struts-public-common" namespace=""
+		extends="struts-interceptor">
+		<!-- 登录登出的Action -->
+		<action name="login" class="login">
+			<result name="success" type="redirect">/jsp/main.jsp</result>
+			<result name="login" type="dispatcher">/index.jsp</result>
+			<result name="logOff" type="redirect">/index.jsp</result>
+			<interceptor-ref name="common-params" />
+		</action>
+	</package>
+	<!-- 公用的Action End -->
+
+	<!-- 个人信息的Action Begin -->
+	<package name="struts-public-user" namespace="/userInfo"
+		extends="struts-interceptor">
+		<!-- 登录登出的Action -->
+		<action name="userInfo" class="userInfo">
+			<result name="success" type="dispatcher">/jsp/admin/userInfo/userEdit.jsp</result>
+			<result name="editPassword" type="dispatcher">/jsp/admin/userInfo/passwordEdit.jsp</result>
+			<interceptor-ref name="common-params" />
+		</action>
+	</package>
+	<!-- 个人信息的Action End -->
+
+	<!-- 管理员Action Begin -->
+    <package name="struts-admin-manager" namespace="/admin/manager" extends="struts-interceptor">
+		<action name="managerAction" class="managerAction">
+			<result name="success" type="dispatcher">/jsp/admin/manager/managerList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/manager/managerAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">managerAction</param>
+				<param name="namespace">/admin/manager</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/manager/managerEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">managerAction</param>
+				<param name="namespace">/admin/manager</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">managerAction</param>
+				<param name="namespace">/admin/manager</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 管理员Action End -->
+    
+    <!-- 角色Action Begin -->
+    <package name="struts-admin-role" namespace="/admin/role" extends="struts-interceptor">
+		<action name="roleAction" class="roleAction">
+			<result name="success" type="dispatcher">/jsp/admin/role/roleList.jsp</result>
+			<result name="forward" type="dispatcher">/jsp/admin/role/roleForward.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/role/roleAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">roleAction</param>
+				<param name="namespace">/admin/role</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/role/roleEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">roleAction</param>
+				<param name="namespace">/admin/role</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">roleAction</param>
+				<param name="namespace">/admin/role</param>
+			</result>
+			
+			<result name="giveRights" type="dispatcher">/jsp/admin/role/giveRights.jsp</result>
+			<result name="saveRights" type="redirectAction">
+				<param name="actionName">roleAction</param>
+				<param name="namespace">/admin/role</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 角色Action End -->
+    
+    <!-- 菜单Action Begin -->
+    <package name="struts-admin-menu" namespace="/admin/menu" extends="struts-interceptor">
+		<action name="menuAction" class="menuAction">
+			<result name="success" type="dispatcher">/jsp/admin/menu/menuList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/menu/menuAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">menuAction</param>
+				<param name="namespace">/admin/menu</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/menu/menuEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">menuAction</param>
+				<param name="namespace">/admin/menu</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">menuAction</param>
+				<param name="namespace">/admin/menu</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 菜单Action End -->
+    
+    <!-- 目录Action Begin -->
+    <package name="struts-admin-catalog" namespace="/admin/catalog" extends="struts-interceptor">
+		<action name="catalogAction" class="catalogAction">
+			<result name="success" type="dispatcher">/jsp/admin/catalog/catalogList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/catalog/catalogAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">catalogAction</param>
+				<param name="namespace">/admin/catalog</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/catalog/catalogEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">catalogAction</param>
+				<param name="namespace">/admin/catalog</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">catalogAction</param>
+				<param name="namespace">/admin/catalog</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 目录Action End -->
+    
+    <!-- 模块Action Begin -->
+    <package name="struts-admin-module" namespace="/admin/module" extends="struts-interceptor">
+		<action name="moduleAction" class="moduleAction">
+			<result name="success" type="dispatcher">/jsp/admin/module/moduleList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/module/moduleAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">moduleAction</param>
+				<param name="namespace">/admin/module</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/module/moduleEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">moduleAction</param>
+				<param name="namespace">/admin/module</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">moduleAction</param>
+				<param name="namespace">/admin/module</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 模块Action End -->
+    
+    
+    <!-- 市Action Begin -->
+    <package name="struts-admin-city" namespace="/admin/city" extends="struts-interceptor">
+		<action name="cityAction" class="cityAction">
+			<result name="success" type="dispatcher">/jsp/admin/city/cityList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/city/cityAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">cityAction</param>
+				<param name="namespace">/admin/city</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/city/cityEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">cityAction</param>
+				<param name="namespace">/admin/city</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">cityAction</param>
+				<param name="namespace">/admin/city</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 市Action End -->
+    
+    <!-- 省Action Begin -->
+    <package name="struts-admin-province" namespace="/admin/province" extends="struts-interceptor">
+		<action name="provinceAction" class="provinceAction">
+			<result name="success" type="dispatcher">/jsp/admin/province/provinceList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/province/provinceAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">provinceAction</param>
+				<param name="namespace">/admin/province</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/province/provinceEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">provinceAction</param>
+				<param name="namespace">/admin/province</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">provinceAction</param>
+				<param name="namespace">/admin/province</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 省Action End -->
+    
+    <!-- 区Action Begin -->
+    <package name="struts-admin-area" namespace="/admin/area" extends="struts-interceptor">
+		<action name="areaAction" class="areaAction">
+			<result name="success" type="dispatcher">/jsp/admin/area/areaList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/area/areaAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">areaAction</param>
+				<param name="namespace">/admin/area</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/area/areaEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">areaAction</param>
+				<param name="namespace">/admin/area</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">areaAction</param>
+				<param name="namespace">/admin/area</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 区Action End -->
+    
+    <!-- 日志Action Begin -->
+    <package name="struts-admin-logs" namespace="/admin/logs" extends="struts-interceptor">
+		<action name="logsAction" class="logsAction">
+			<result name="success" type="dispatcher">/jsp/admin/logs/logsList.jsp</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 日志Action End -->
+    
+    <!-- 字典Action Begin -->
+    <package name="struts-admin-dict" namespace="/admin/dict" extends="struts-interceptor">
+		<action name="dictAction" class="dictAction">
+			<result name="success" type="dispatcher">/jsp/admin/dict/dictList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/dict/dictAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">dictAction</param>
+				<param name="namespace">/admin/dict</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/dict/dictEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">dictAction</param>
+				<param name="namespace">/admin/dict</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">dictAction</param>
+				<param name="namespace">/admin/dict</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 字典Action End -->
+    
+    
+</struts>

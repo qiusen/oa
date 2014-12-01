@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IProvinceDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="provinceLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="code != null and code != ''">
+			    and `CODE` like '%${code}%'
+		    </if>
+	        <if test ="name != null and name != ''">
+			    and `NAME` like '%${name}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="provincePage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="provinceField">
+		`ID`, `CODE`, `NAME`
+	</sql>
+	
+	<resultMap id="provinceMap" type="province">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="code" column="CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="name" column="NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="addSaveProvince" parameterType="province">
+		insert into `province` (
+           `CODE`, 
+           `NAME`
+		) values 
+		(
+            #{code}, 
+            #{name}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `province` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `province` ${_parameter}
+	</delete>
+	
+	<update id="editSaveProvince" parameterType="province">
+		update `province` set 
+              `CODE` = #{code}, 
+              `NAME` = #{name}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectProvinceById" parameterType="province" resultMap="provinceMap"  >
+		SELECT * FROM `province` where ID = #{id}
+	</select>
+	
+	<select id="getProvinceCount" parameterType="province" resultType="Long" >
+		select count(*) from `province`
+		<include refid="provinceLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="province" resultMap="provinceMap" >
+		select * from `province`
+	</select>
+	
+	<select id="selectProvinceLike" parameterType="province" resultMap="provinceMap" >
+		SELECT <include refid="provinceField" /> FROM `province`
+	        <include refid="provinceLikeWhere" />
+			order by ID
+	        <include refid="provincePage" /> 
+	</select>
+	
+	<select id="selectProvinceByCodes" parameterType="province" resultMap="provinceMap" >
+		SELECT <include refid="provinceField" /> FROM `province`
+	     where   CODE in (${idStr})
+			order by ID
+	</select>
+</mapper>
