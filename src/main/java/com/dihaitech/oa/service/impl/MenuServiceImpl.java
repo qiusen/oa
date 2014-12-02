@@ -22,7 +22,7 @@ public class MenuServiceImpl implements IMenuService {
 	private IMenuDAO menuDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#addSave(com.dihaitech.acomp.model.Menu)
+	 * @see com.dihaitech.oa.service.IMenuService#addSave(com.dihaitech.oa.model.Menu)
 	 */
 	public int addSave(Menu menu) {
 		return menuDAO.addSaveMenu(menu);
@@ -30,35 +30,35 @@ public class MenuServiceImpl implements IMenuService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.IMenuService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return menuDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#editSave(com.dihaitech.acomp.model.Menu)
+	 * @see com.dihaitech.oa.service.IMenuService#editSave(com.dihaitech.oa.model.Menu)
 	 */
 	public int editSave(Menu menu) {
 		return menuDAO.editSaveMenu(menu);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.IMenuService#selectAll()
+	 * @see com.dihaitech.oa.IMenuService#selectAll()
 	 */
 	public List<Menu> selectAll() {
 		return menuDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#selectMenu(com.dihaitech.acomp.model.Menu, int)
+	 * @see com.dihaitech.oa.service.IMenuService#selectMenu(com.dihaitech.oa.model.Menu, int)
 	 */
 	public Page selectMenu(Menu menu, int pageSize) {
 		return new Page(menuDAO.getMenuCount(menu), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#selectMenu(com.dihaitech.acomp.model.Menu, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.IMenuService#selectMenu(com.dihaitech.oa.model.Menu, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<Menu> selectMenu(Menu menu, Page page) {
 		menu.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class MenuServiceImpl implements IMenuService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#selectMenuById(com.dihaitech.acomp.model.Menu)
+	 * @see com.dihaitech.oa.service.IMenuService#selectMenuById(com.dihaitech.oa.model.Menu)
 	 */
 	public Menu selectMenuById(Menu menu) {
 		return menuDAO.selectMenuById(menu);
@@ -75,7 +75,7 @@ public class MenuServiceImpl implements IMenuService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#selectMenuByIdsStatus(com.dihaitech.acomp.model.Menu)
+	 * @see com.dihaitech.oa.service.IMenuService#selectMenuByIdsStatus(com.dihaitech.oa.model.Menu)
 	 */
 	@Override
 	public List<Menu> selectMenuByIdsStatus(Menu menu) {
@@ -85,7 +85,7 @@ public class MenuServiceImpl implements IMenuService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IMenuService#selectAllByStatus(com.dihaitech.acomp.model.Menu)
+	 * @see com.dihaitech.oa.service.IMenuService#selectAllByStatus(com.dihaitech.oa.model.Menu)
 	 */
 	@Override
 	public List<Menu> selectAllByStatus(Menu menu) {

@@ -22,7 +22,7 @@ public class RoleServiceImpl implements IRoleService {
 	private IRoleDAO roleDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#addSave(com.dihaitech.acomp.model.Role)
+	 * @see com.dihaitech.oa.service.IRoleService#addSave(com.dihaitech.oa.model.Role)
 	 */
 	public int addSave(Role role) {
 		return roleDAO.addSaveRole(role);
@@ -30,35 +30,35 @@ public class RoleServiceImpl implements IRoleService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.IRoleService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return roleDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#editSave(com.dihaitech.acomp.model.Role)
+	 * @see com.dihaitech.oa.service.IRoleService#editSave(com.dihaitech.oa.model.Role)
 	 */
 	public int editSave(Role role) {
 		return roleDAO.editSaveRole(role);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.IRoleService#selectAll()
+	 * @see com.dihaitech.oa.IRoleService#selectAll()
 	 */
 	public List<Role> selectAll() {
 		return roleDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#selectRole(com.dihaitech.acomp.model.Role, int)
+	 * @see com.dihaitech.oa.service.IRoleService#selectRole(com.dihaitech.oa.model.Role, int)
 	 */
 	public Page selectRole(Role role, int pageSize) {
 		return new Page(roleDAO.getRoleCount(role), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#selectRole(com.dihaitech.acomp.model.Role, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.IRoleService#selectRole(com.dihaitech.oa.model.Role, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<Role> selectRole(Role role, Page page) {
 		role.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#selectRoleById(com.dihaitech.acomp.model.Role)
+	 * @see com.dihaitech.oa.service.IRoleService#selectRoleById(com.dihaitech.oa.model.Role)
 	 */
 	public Role selectRoleById(Role role) {
 		return roleDAO.selectRoleById(role);
@@ -75,7 +75,7 @@ public class RoleServiceImpl implements IRoleService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#selectAllByStatus(com.dihaitech.acomp.model.Role)
+	 * @see com.dihaitech.oa.service.IRoleService#selectAllByStatus(com.dihaitech.oa.model.Role)
 	 */
 	@Override
 	public List<Role> selectAllByStatus(Role role) {
@@ -85,7 +85,7 @@ public class RoleServiceImpl implements IRoleService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IRoleService#editRights(com.dihaitech.acomp.model.Role)
+	 * @see com.dihaitech.oa.service.IRoleService#editRights(com.dihaitech.oa.model.Role)
 	 */
 	@Override
 	public int editRights(Role role) {

@@ -22,7 +22,7 @@ public class LogsServiceImpl implements ILogsService {
 	private ILogsDAO logsDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ILogsService#addSave(com.dihaitech.acomp.model.Logs)
+	 * @see com.dihaitech.oa.service.ILogsService#addSave(com.dihaitech.oa.model.Logs)
 	 */
 	public int addSave(Logs logs) {
 		return logsDAO.addSaveLogs(logs);
@@ -30,35 +30,35 @@ public class LogsServiceImpl implements ILogsService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ILogsService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.ILogsService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return logsDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ILogsService#editSave(com.dihaitech.acomp.model.Logs)
+	 * @see com.dihaitech.oa.service.ILogsService#editSave(com.dihaitech.oa.model.Logs)
 	 */
 	public int editSave(Logs logs) {
 		return logsDAO.editSaveLogs(logs);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.ILogsService#selectAll()
+	 * @see com.dihaitech.oa.ILogsService#selectAll()
 	 */
 	public List<Logs> selectAll() {
 		return logsDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ILogsService#selectLogs(com.dihaitech.acomp.model.Logs, int)
+	 * @see com.dihaitech.oa.service.ILogsService#selectLogs(com.dihaitech.oa.model.Logs, int)
 	 */
 	public Page selectLogs(Logs logs, int pageSize) {
 		return new Page(logsDAO.getLogsCount(logs), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ILogsService#selectLogs(com.dihaitech.acomp.model.Logs, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.ILogsService#selectLogs(com.dihaitech.oa.model.Logs, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<Logs> selectLogs(Logs logs, Page page) {
 		logs.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class LogsServiceImpl implements ILogsService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ILogsService#selectLogsById(com.dihaitech.acomp.model.Logs)
+	 * @see com.dihaitech.oa.service.ILogsService#selectLogsById(com.dihaitech.oa.model.Logs)
 	 */
 	public Logs selectLogsById(Logs logs) {
 		return logsDAO.selectLogsById(logs);

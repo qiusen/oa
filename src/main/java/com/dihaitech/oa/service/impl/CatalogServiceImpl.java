@@ -22,7 +22,7 @@ public class CatalogServiceImpl implements ICatalogService {
 	private ICatalogDAO catalogDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#addSave(com.dihaitech.acomp.model.Catalog)
+	 * @see com.dihaitech.oa.service.ICatalogService#addSave(com.dihaitech.oa.model.Catalog)
 	 */
 	public int addSave(Catalog catalog) {
 		return catalogDAO.addSaveCatalog(catalog);
@@ -30,35 +30,35 @@ public class CatalogServiceImpl implements ICatalogService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.ICatalogService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return catalogDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#editSave(com.dihaitech.acomp.model.Catalog)
+	 * @see com.dihaitech.oa.service.ICatalogService#editSave(com.dihaitech.oa.model.Catalog)
 	 */
 	public int editSave(Catalog catalog) {
 		return catalogDAO.editSaveCatalog(catalog);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.ICatalogService#selectAll()
+	 * @see com.dihaitech.oa.ICatalogService#selectAll()
 	 */
 	public List<Catalog> selectAll() {
 		return catalogDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#selectCatalog(com.dihaitech.acomp.model.Catalog, int)
+	 * @see com.dihaitech.oa.service.ICatalogService#selectCatalog(com.dihaitech.oa.model.Catalog, int)
 	 */
 	public Page selectCatalog(Catalog catalog, int pageSize) {
 		return new Page(catalogDAO.getCatalogCount(catalog), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#selectCatalog(com.dihaitech.acomp.model.Catalog, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.ICatalogService#selectCatalog(com.dihaitech.oa.model.Catalog, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<Catalog> selectCatalog(Catalog catalog, Page page) {
 		catalog.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class CatalogServiceImpl implements ICatalogService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#selectCatalogById(com.dihaitech.acomp.model.Catalog)
+	 * @see com.dihaitech.oa.service.ICatalogService#selectCatalogById(com.dihaitech.oa.model.Catalog)
 	 */
 	public Catalog selectCatalogById(Catalog catalog) {
 		return catalogDAO.selectCatalogById(catalog);
@@ -75,7 +75,7 @@ public class CatalogServiceImpl implements ICatalogService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#selectCatalogByIdsStatus(com.dihaitech.acomp.model.Catalog)
+	 * @see com.dihaitech.oa.service.ICatalogService#selectCatalogByIdsStatus(com.dihaitech.oa.model.Catalog)
 	 */
 	@Override
 	public List<Catalog> selectCatalogByIdsStatus(Catalog catalog) {
@@ -85,7 +85,7 @@ public class CatalogServiceImpl implements ICatalogService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#selectAllByStatus(com.dihaitech.acomp.model.Catalog)
+	 * @see com.dihaitech.oa.service.ICatalogService#selectAllByStatus(com.dihaitech.oa.model.Catalog)
 	 */
 	@Override
 	public List<Catalog> selectAllByStatus(Catalog catalog) {
@@ -95,7 +95,7 @@ public class CatalogServiceImpl implements ICatalogService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICatalogService#selectAllByMenuStatus(com.dihaitech.acomp.model.Catalog)
+	 * @see com.dihaitech.oa.service.ICatalogService#selectAllByMenuStatus(com.dihaitech.oa.model.Catalog)
 	 */
 	@Override
 	public List<Catalog> selectAllByMenuStatus(Catalog catalog) {

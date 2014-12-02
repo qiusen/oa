@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dihaitech.oa.dao.IManagerDAO">
-	
 	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
 	
 	<sql id="managerLikeWhere">
@@ -127,7 +126,7 @@
 	        <include refid="managerPage" /> 
 	</select>
 	
-	<select id="login" parameterType="manager" resultMap="managerMap" >
+	<select id="loginByUsernamePassword" parameterType="manager" resultMap="managerMap" >
 	     SELECT <include refid="managerField" /> FROM `manager`
 	     where USERNAME= #{username} and PASSWORD = #{password} 
 	</select>

@@ -74,7 +74,7 @@ public interface IManagerDAO {
 	 * @param manager
 	 * @return
 	 */
-	public Manager login(Manager manager);
+	public Manager loginByUsernamePassword(Manager manager);
 	
 	/**
 	 * 根据ID 修改登录时间和IP

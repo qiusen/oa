@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
-	<bean id="catalogAjax" class="com.dihaitech.acomp.dwr.CatalogAjax" >
+	<bean id="catalogAjax" class="com.dihaitech.oa.dwr.CatalogAjax" >
 		<property name="catalogService" ref="catalogService"></property>
 	</bean>
 
-	<bean id="cityAjax" class="com.dihaitech.acomp.dwr.CityAjax" >
+	<bean id="cityAjax" class="com.dihaitech.oa.dwr.CityAjax" >
 		<property name="cityService" ref="cityService"></property>
 	</bean>
 	

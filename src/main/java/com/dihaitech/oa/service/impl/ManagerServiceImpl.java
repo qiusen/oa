@@ -22,7 +22,7 @@ public class ManagerServiceImpl implements IManagerService {
 	private IManagerDAO managerDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#addSave(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#addSave(com.dihaitech.oa.model.Manager)
 	 */
 	public int addSave(Manager manager) {
 		return managerDAO.addSaveManager(manager);
@@ -30,35 +30,35 @@ public class ManagerServiceImpl implements IManagerService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.IManagerService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return managerDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#editSave(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#editSave(com.dihaitech.oa.model.Manager)
 	 */
 	public int editSave(Manager manager) {
 		return managerDAO.editSaveManager(manager);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.IManagerService#selectAll()
+	 * @see com.dihaitech.oa.IManagerService#selectAll()
 	 */
 	public List<Manager> selectAll() {
 		return managerDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#selectManager(com.dihaitech.acomp.model.Manager, int)
+	 * @see com.dihaitech.oa.service.IManagerService#selectManager(com.dihaitech.oa.model.Manager, int)
 	 */
 	public Page selectManager(Manager manager, int pageSize) {
 		return new Page(managerDAO.getManagerCount(manager), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#selectManager(com.dihaitech.acomp.model.Manager, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.IManagerService#selectManager(com.dihaitech.oa.model.Manager, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<Manager> selectManager(Manager manager, Page page) {
 		manager.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class ManagerServiceImpl implements IManagerService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#selectManagerById(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#selectManagerById(com.dihaitech.oa.model.Manager)
 	 */
 	public Manager selectManagerById(Manager manager) {
 		return managerDAO.selectManagerById(manager);
@@ -75,17 +75,17 @@ public class ManagerServiceImpl implements IManagerService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#login(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#login(com.dihaitech.oa.model.Manager)
 	 */
 	@Override
 	public Manager login(Manager manager) {
 		// TODO Auto-generated method stub
-		return managerDAO.login(manager);
+		return managerDAO.loginByUsernamePassword(manager);
 	}
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#editSaveManager(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#editSaveManager(com.dihaitech.oa.model.Manager)
 	 */
 	@Override
 	public int editSaveManager(Manager manager) {
@@ -95,7 +95,7 @@ public class ManagerServiceImpl implements IManagerService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#editSaveUser(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#editSaveUser(com.dihaitech.oa.model.Manager)
 	 */
 	@Override
 	public int editSaveUser(Manager manager) {
@@ -105,7 +105,7 @@ public class ManagerServiceImpl implements IManagerService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#editSavePassword(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#editSavePassword(com.dihaitech.oa.model.Manager)
 	 */
 	@Override
 	public int editSavePassword(Manager manager) {
@@ -115,7 +115,7 @@ public class ManagerServiceImpl implements IManagerService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IManagerService#selectCountByRoleId(com.dihaitech.acomp.model.Manager)
+	 * @see com.dihaitech.oa.service.IManagerService#selectCountByRoleId(com.dihaitech.oa.model.Manager)
 	 */
 	@Override
 	public Long selectCountByRoleId(Manager manager) {

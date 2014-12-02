@@ -22,7 +22,7 @@ public class CityServiceImpl implements ICityService {
 	private ICityDAO cityDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#addSave(com.dihaitech.acomp.model.City)
+	 * @see com.dihaitech.oa.service.ICityService#addSave(com.dihaitech.oa.model.City)
 	 */
 	public int addSave(City city) {
 		return cityDAO.addSaveCity(city);
@@ -30,35 +30,35 @@ public class CityServiceImpl implements ICityService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.ICityService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return cityDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#editSave(com.dihaitech.acomp.model.City)
+	 * @see com.dihaitech.oa.service.ICityService#editSave(com.dihaitech.oa.model.City)
 	 */
 	public int editSave(City city) {
 		return cityDAO.editSaveCity(city);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.ICityService#selectAll()
+	 * @see com.dihaitech.oa.ICityService#selectAll()
 	 */
 	public List<City> selectAll() {
 		return cityDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#selectCity(com.dihaitech.acomp.model.City, int)
+	 * @see com.dihaitech.oa.service.ICityService#selectCity(com.dihaitech.oa.model.City, int)
 	 */
 	public Page selectCity(City city, int pageSize) {
 		return new Page(cityDAO.getCityCount(city), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#selectCity(com.dihaitech.acomp.model.City, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.ICityService#selectCity(com.dihaitech.oa.model.City, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<City> selectCity(City city, Page page) {
 		city.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class CityServiceImpl implements ICityService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#selectCityById(com.dihaitech.acomp.model.City)
+	 * @see com.dihaitech.oa.service.ICityService#selectCityById(com.dihaitech.oa.model.City)
 	 */
 	public City selectCityById(City city) {
 		return cityDAO.selectCityById(city);
@@ -75,7 +75,7 @@ public class CityServiceImpl implements ICityService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#selectCityByProvinceCode(com.dihaitech.acomp.model.City)
+	 * @see com.dihaitech.oa.service.ICityService#selectCityByProvinceCode(com.dihaitech.oa.model.City)
 	 */
 	@Override
 	public List<City> selectCityByProvinceCode(City city) {
@@ -85,7 +85,7 @@ public class CityServiceImpl implements ICityService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#selectCityByCodes(com.dihaitech.acomp.model.City)
+	 * @see com.dihaitech.oa.service.ICityService#selectCityByCodes(com.dihaitech.oa.model.City)
 	 */
 	@Override
 	public List<City> selectCityByCodes(City city) {
@@ -95,7 +95,7 @@ public class CityServiceImpl implements ICityService {
 
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.ICityService#selectCityByCode(com.dihaitech.acomp.model.City)
+	 * @see com.dihaitech.oa.service.ICityService#selectCityByCode(com.dihaitech.oa.model.City)
 	 */
 	@Override
 	public City selectCityByCode(City city) {

@@ -22,7 +22,7 @@ public class DictServiceImpl implements IDictService {
 	private IDictDAO dictDAO;
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IDictService#addSave(com.dihaitech.acomp.model.Dict)
+	 * @see com.dihaitech.oa.service.IDictService#addSave(com.dihaitech.oa.model.Dict)
 	 */
 	public int addSave(Dict dict) {
 		return dictDAO.addSaveDict(dict);
@@ -30,35 +30,35 @@ public class DictServiceImpl implements IDictService {
 	
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IDictService#deleteByIds(java.lang.String)
+	 * @see com.dihaitech.oa.service.IDictService#deleteByIds(java.lang.String)
 	 */
 	public int deleteByIds(String str) {
 		return dictDAO.deleteByIds(str);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IDictService#editSave(com.dihaitech.acomp.model.Dict)
+	 * @see com.dihaitech.oa.service.IDictService#editSave(com.dihaitech.oa.model.Dict)
 	 */
 	public int editSave(Dict dict) {
 		return dictDAO.editSaveDict(dict);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.IDictService#selectAll()
+	 * @see com.dihaitech.oa.IDictService#selectAll()
 	 */
 	public List<Dict> selectAll() {
 		return dictDAO.selectAll();
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IDictService#selectDict(com.dihaitech.acomp.model.Dict, int)
+	 * @see com.dihaitech.oa.service.IDictService#selectDict(com.dihaitech.oa.model.Dict, int)
 	 */
 	public Page selectDict(Dict dict, int pageSize) {
 		return new Page(dictDAO.getDictCount(dict), pageSize);
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IDictService#selectDict(com.dihaitech.acomp.model.Dict, com.dihaitech.acomp.controller.helper.Page)
+	 * @see com.dihaitech.oa.service.IDictService#selectDict(com.dihaitech.oa.model.Dict, com.dihaitech.oa.controller.helper.Page)
 	 */
 	public List<Dict> selectDict(Dict dict, Page page) {
 		dict.setStart(page.getFirstItemPos());
@@ -67,7 +67,7 @@ public class DictServiceImpl implements IDictService {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.dihaitech.acomp.service.IDictService#selectDictById(com.dihaitech.acomp.model.Dict)
+	 * @see com.dihaitech.oa.service.IDictService#selectDictById(com.dihaitech.oa.model.Dict)
 	 */
 	public Dict selectDictById(Dict dict) {
 		return dictDAO.selectDictById(dict);
