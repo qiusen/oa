@@ -128,6 +128,42 @@
 		<property name="BLOCK_LINK_FOLDER" value="${block.link.folder}"></property>
 		<!-- 块相关内容 end -->
 	</bean>
+	
+	<!-- Activiti begin -->
+	<!-- 创建一个流程引擎的配置对象你不用管这个是什么意思 这个是死的这就是配置这个就是所谓activiti的引擎 现在你已经制造他了 -->  
+	<bean id="processEngineConfiguration"  class="org.activiti.spring.SpringProcessEngineConfiguration">   
+		<!-- 这里是数据源的指定 指向你自己的dataSource -->    
+		<property name="dataSource" ref="dataSource" />    
+		<property name="transactionManager" ref="transactionManager" /> 
+		<!-- 设置数据库schema的更新方式 -->      
+		<property name="databaseSchemaUpdate" value="true" /> 
+		<!-- 是否 启动jobExecutor -->   
+		<property name="jobExecutorActivate" value="false" />      
+		<!-- 自动部署就是自己自动部署流程 意思就是 我本来没流程啊 怎么多出来的流程 就是在这里 自动部署的，流程只有部署了 用户才可以走这个流程 -->   
+		<property name="deploymentResources">    
+			<list>     
+				<value>classpath*:/deployments/*</value>     
+			</list>    
+		</property>       
+		<!-- 自定义表单字段类型 这个很重要 很重要  你不用明白他是什么意思 他就是必须的 自己在自己的项目里加上这个类然后指向他 -->  
+		<!--  
+		<property name="customFormTypes">      
+			<list>      
+				<bean class="指向你加进去的类参照：(com.acti.UsersFormType)"  />     
+			</list>     
+		</property>
+		 -->    
+	</bean>  
+	<bean id="processEngine"  class="org.activiti.spring.ProcessEngineFactoryBean">    
+		<property name="processEngineConfiguration"  ref="processEngineConfiguration" />
+	</bean>
+	
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />  
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />  
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />  
+  	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />  
+  	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" /> 
+	<!-- Activiti end -->
 
 	<!-- 存放Service的Bean的配置文件 -->
 	<import resource="serviceContext.xml" />
