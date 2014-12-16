@@ -9,8 +9,8 @@
             <if test ="id != null and id > -1">
 				and `ID` = #{id}
 			</if>
-	        <if test ="username != null and username != ''">
-			    and `USERNAME` like '%${username}%'
+	        <if test ="email != null and email != ''">
+			    and `EMAIL` like '%${email}%'
 		    </if>
 	        <if test ="nickname != null and nickname != ''">
 			    and `NICKNAME` like '%${nickname}%'
@@ -34,12 +34,12 @@
 	</sql>
 	
 	<sql id="logsField">
-		`ID`, `USERNAME`, `NICKNAME`, `IP`, `ACT`, `OPTTIME`, `CONTENT`
+		`ID`, `EMAIL`, `NICKNAME`, `IP`, `ACT`, `OPTTIME`, `CONTENT`
 	</sql>
 	
 	<resultMap id="logsMap" type="logs">
 	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
-	    	<result property="username" column="USERNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="email" column="EMAIL" javaType="java.lang.String" jdbcType="VARCHAR" />
 	    	<result property="nickname" column="NICKNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
 	    	<result property="ip" column="IP" javaType="java.lang.String" jdbcType="VARCHAR" />
 	    	<result property="act" column="ACT" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -49,7 +49,7 @@
 	
 	<insert id="addSaveLogs" parameterType="logs">
 		insert into `logs` (
-           `USERNAME`, 
+           `EMAIL`, 
            `NICKNAME`, 
            `IP`, 
            `ACT`, 
@@ -57,7 +57,7 @@
            `CONTENT`
 		) values 
 		(
-            #{username}, 
+            #{email}, 
             #{nickname}, 
             #{ip}, 
             #{act}, 

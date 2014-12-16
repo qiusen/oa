@@ -7,17 +7,10 @@
 		scope="prototype">
 	</bean>
 	
-	<!-- 用户个人信息Action -->
-	<bean id="userInfo" class="com.dihaitech.oa.controller.action.common.UserAction"
-		scope="prototype">
-	</bean>
-
-
-
-	  <!-- 管理员 action -->
-	  <bean id="managerAction" class="com.dihaitech.oa.controller.action.manager.ManagerAction" scope="prototype">
-			<property name="managerService">
-				<ref bean="managerService" />
+	<!-- 用户角色 action -->
+	  <bean id="managerRoleAction" class="com.dihaitech.oa.controller.action.managerRole.ManagerRoleAction" scope="prototype">
+			<property name="managerRoleService">
+				<ref bean="managerRoleService" />
 			</property>
 	  </bean>
 	  

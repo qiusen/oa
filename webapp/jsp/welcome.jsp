@@ -5,7 +5,10 @@
 <title></title>
 </head>
 <body>
-		<center><h1>欢迎使用<%=Property.SYSTEM_NAME %></h1></center>
+		<center><h1 style="color: #0068b7;">欢迎使用<%=Property.SYSTEM_NAME %></h1></center>
+		<c:if test="${sessionScope.rightsMap==null }">
+		<center><h3 style="color: #ff6800;">您还没有被赋予权限，请联系<%=Property.SYSTEM_NAME %>管理员</h3></center>
+		</c:if>
 		<ul>
 		<li>1、基础框架</li>
 		<li>2、模块灵活配置</li>

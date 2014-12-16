@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.IManagerRoleDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="managerRoleLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="email != null and email != ''">
+			    and `EMAIL` like '%${email}%'
+		    </if>
+            <if test ="roleId != null and roleId > -1">
+				and `ROLE_ID` = #{roleId}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="managerRolePage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="managerRoleField">
+		`ID`, `EMAIL`, `ROLE_ID`, `CREATETIME`, `UPDATETIME`
+	</sql>
+	
+	<resultMap id="managerRoleMap" type="managerRole">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="email" column="EMAIL" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="roleId" column="ROLE_ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="updatetime" column="UPDATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="addSaveManagerRole" parameterType="managerRole">
+		insert into `manager_role` (
+           `EMAIL`, 
+           `ROLE_ID`, 
+           `CREATETIME`, 
+           `UPDATETIME`
+		) values 
+		(
+            #{email}, 
+            #{roleId}, 
+            #{createtime}, 
+            #{updatetime}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `manager_role` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `manager_role` ${_parameter}
+	</delete>
+	
+	<update id="editSaveManagerRole" parameterType="managerRole">
+		update `manager_role` set 
+              `EMAIL` = #{email}, 
+              `ROLE_ID` = #{roleId}, 
+              `CREATETIME` = #{createtime}, 
+              `UPDATETIME` = #{updatetime}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectManagerRoleById" parameterType="managerRole" resultMap="managerRoleMap"  >
+		SELECT * FROM `manager_role` where ID = #{id}
+	</select>
+	
+	<select id="getManagerRoleCount" parameterType="managerRole" resultType="Long" >
+		select count(*) from `manager_role`
+		<include refid="managerRoleLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="managerRole" resultMap="managerRoleMap" >
+		select * from `manager_role`
+	</select>
+	
+	<select id="selectManagerRoleLike" parameterType="managerRole" resultMap="managerRoleMap" >
+		SELECT <include refid="managerRoleField" /> FROM `manager_role`
+	        <include refid="managerRoleLikeWhere" />
+			order by ID desc
+	        <include refid="managerRolePage" /> 
+	</select>
+	
+	<select id="selectCountByRoleId" parameterType="managerRole" resultType="Long" >
+		select count(*) from `manager_role`
+		where `ROLE_ID` = #{roleId}
+	</select>
+	
+	<select id="selectManagerRoleByEmail" parameterType="managerRole" resultMap="managerRoleMap"  >
+		SELECT * FROM `manager_role` where `EMAIL` = #{email}
+	</select>
+</mapper>

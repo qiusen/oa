@@ -10,18 +10,19 @@ import org.apache.log4j.MDC;
 import com.dihaitech.oa.common.Property;
 import com.dihaitech.oa.controller.action.BaseAction;
 import com.dihaitech.oa.model.Catalog;
-import com.dihaitech.oa.model.Manager;
+import com.dihaitech.oa.model.ManagerRole;
 import com.dihaitech.oa.model.Menu;
 import com.dihaitech.oa.model.Module;
 import com.dihaitech.oa.model.Role;
 import com.dihaitech.oa.service.ICatalogService;
-import com.dihaitech.oa.service.IManagerService;
+import com.dihaitech.oa.service.IManagerRoleService;
 import com.dihaitech.oa.service.IMenuService;
 import com.dihaitech.oa.service.IModuleService;
 import com.dihaitech.oa.service.IRoleService;
 import com.dihaitech.oa.util.Page;
 import com.dihaitech.oa.util.TypeUtil;
 import com.dihaitech.oa.util.json.JSONUtil;
+import com.dihaitech.tserver.managercenter.Manager;
 
 /**
  * 角色Action
@@ -36,13 +37,13 @@ public class RoleAction extends BaseAction {
 	private Role role = new Role();
 	private IRoleService roleService;
 
-	private IManagerService managerService;
-
 	private IModuleService moduleService;
 
 	private IMenuService menuService;
 
 	private ICatalogService catalogService;
+	
+	private IManagerRoleService managerRoleService;
 
 	public Role getRole() {
 		return role;
@@ -83,13 +84,14 @@ public class RoleAction extends BaseAction {
 	public void setCatalogService(ICatalogService catalogService) {
 		this.catalogService = catalogService;
 	}
+	
 
-	public IManagerService getManagerService() {
-		return managerService;
+	public IManagerRoleService getManagerRoleService() {
+		return managerRoleService;
 	}
 
-	public void setManagerService(IManagerService managerService) {
-		this.managerService = managerService;
+	public void setManagerRoleService(IManagerRoleService managerRoleService) {
+		this.managerRoleService = managerRoleService;
 	}
 
 	/*
@@ -171,7 +173,7 @@ public class RoleAction extends BaseAction {
 
 		Manager managerVO = (Manager) this.getSession().getAttribute("manager");
 		// 记录日志
-		MDC.put("username", managerVO.getUsername()); // 用户名
+		MDC.put("email", managerVO.getEmail()); // 用户名
 		MDC.put("nickname", managerVO.getNickname()); // 昵称
 		MDC.put("ip", this.getRealIP()); // IP
 		MDC.put("act", "addRole"); // 添加角色
@@ -216,7 +218,7 @@ public class RoleAction extends BaseAction {
 
 		Manager managerVO = (Manager) this.getSession().getAttribute("manager");
 		// 记录日志
-		MDC.put("username", managerVO.getUsername()); // 用户名
+		MDC.put("email", managerVO.getEmail()); // 用户名
 		MDC.put("nickname", managerVO.getNickname()); // 昵称
 		MDC.put("ip", this.getRealIP()); // IP
 		MDC.put("act", "editRole"); // 修改角色
@@ -234,9 +236,10 @@ public class RoleAction extends BaseAction {
 		String idstr = this.getRequest().getParameter("id");
 		int id = TypeUtil.stringToInt(idstr);
 		if (id > 0) {
-			Manager managerTemp = new Manager();
-			managerTemp.setRoleId(id);
-			long c = managerService.selectCountByRoleId(managerTemp);
+			ManagerRole managerRole = new ManagerRole();
+			managerRole.setRoleId(id);
+			long c = managerRoleService.selectCountByRoleId(managerRole);
+			
 			if (c > 0) { // 角色下有用户，不允许删除
 				this.getRequest().setAttribute("errCode", "hasManager");
 				return "forward";
@@ -248,7 +251,7 @@ public class RoleAction extends BaseAction {
 				Manager managerVO = (Manager) this.getSession().getAttribute(
 						"manager");
 				// 记录日志
-				MDC.put("username", managerVO.getUsername()); // 用户名
+				MDC.put("email", managerVO.getEmail()); // 用户名
 				MDC.put("nickname", managerVO.getNickname()); // 昵称
 				MDC.put("ip", this.getRealIP()); // IP
 				MDC.put("act", "deleteRole"); // 删除角色
@@ -281,7 +284,7 @@ public class RoleAction extends BaseAction {
 			Manager managerVO = (Manager) this.getSession().getAttribute(
 					"manager");
 			// 记录日志
-			MDC.put("username", managerVO.getUsername()); // 用户名
+			MDC.put("email", managerVO.getEmail()); // 用户名
 			MDC.put("nickname", managerVO.getNickname()); // 昵称
 			MDC.put("ip", this.getRealIP()); // IP
 			MDC.put("act", "deleteRole"); // 删除角色

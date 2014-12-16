@@ -13,9 +13,9 @@ import java.util.Date;
 public class Logs extends BaseModel{
 	
 	/**
-	 * 用户名
+	 * 邮箱
 	 */
-	private String username;
+	private String email;
 	
 	/**
 	 * 昵称
@@ -41,11 +41,12 @@ public class Logs extends BaseModel{
 	 * 操作内容
 	 */
 	private String content;
-	public String getUsername() {
-		return username;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getNickname() {
 		return nickname;

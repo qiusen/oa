@@ -1,6 +1,7 @@
 package com.dihaitech.oa.controller.filter;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dihaitech.oa.common.Property;
-import com.dihaitech.oa.model.Manager;
+import com.dihaitech.oa.model.Module;
+import com.dihaitech.tserver.managercenter.Manager;
 
 
 
@@ -51,7 +53,7 @@ public class SessionFilter implements Filter {
 			if (manager != null) {
 				
 				//判断权限，放过/user下所有权限
-				if(nameSpaceStr.equalsIgnoreCase("/userInfo") || hasRights(httpRequest, manager, nameSpaceStr)){
+				if(nameSpaceStr.equalsIgnoreCase("/userInfo") || hasRights(httpRequest, nameSpaceStr)){
 					chain.doFilter(request, response);
 				}else{
 					httpResponse.sendRedirect(Property.BASE + "/jsp/common/noRights.jsp");
@@ -68,18 +70,20 @@ public class SessionFilter implements Filter {
 	/**
 	 * 判断权限
 	 * @param request
-	 * @param manager
 	 * @param nameSpaceStr
 	 * @return
 	 */
-	private boolean hasRights(HttpServletRequest request, Manager manager, String nameSpaceStr) {
+	@SuppressWarnings("unchecked")
+	private boolean hasRights(HttpServletRequest request, String nameSpaceStr) {
 		boolean hasRights = false;
 		
 		if (nameSpaceStr.equalsIgnoreCase("") || nameSpaceStr.equalsIgnoreCase("/") || nameSpaceStr.equalsIgnoreCase("/public/common")) {
 			hasRights = true;
 		} else {
-			if (manager != null && manager.getRightsMap()!=null) {
-				if (manager.getRightsMap().containsKey(nameSpaceStr)) {
+			Object o = ((HttpServletRequest)request).getSession().getAttribute("rightsMap");
+			Map<String, Module>  rightsMap = (Map<String, Module>) o;
+			if (o!=null) {
+				if (rightsMap.containsKey(nameSpaceStr)) {
 					hasRights = true;
 				}
 			} else {

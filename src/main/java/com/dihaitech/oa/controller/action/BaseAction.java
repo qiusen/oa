@@ -8,7 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.log4j.MDC;
 import org.apache.struts2.ServletActionContext;
 
-import com.dihaitech.oa.model.Manager;
+import com.dihaitech.tserver.managercenter.Manager;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -110,9 +110,8 @@ public abstract class BaseAction extends ActionSupport {
 	 */
 	public int getManagerPageSize() {
 		int pageSize = 0;
-		if (this.getSession().getAttribute("manager") != null) {
-			pageSize = ((Manager) this.getSession().getAttribute("manager"))
-					.getPageSize().intValue();
+		if (this.getSession().getAttribute("pageSize") != null) {
+			pageSize = ((int) this.getSession().getAttribute("pageSize"));
 		}
 		return pageSize;
 	}
@@ -123,10 +122,8 @@ public abstract class BaseAction extends ActionSupport {
 	 * @return 当前用户的分页数
 	 */
 	public void setManagerPageSize(int pageSize) {
-		if (this.getSession().getAttribute("manager") != null) {
-			((Manager) this.getSession().getAttribute("manager"))
-					.setPageSize(pageSize);
-		}
+		
+		this.getSession().setAttribute("pageSize", pageSize);
 	}
 
 	public Manager getSessionManager() {
@@ -147,7 +144,7 @@ public abstract class BaseAction extends ActionSupport {
 		if(o!=null){
 			manager = (Manager)this.getSession().getAttribute("manager");
 			//记录日志
-			MDC.put("username", manager.getUsername());	//用户名
+			MDC.put("email", manager.getEmail());	//用户名
 			MDC.put("nickname", manager.getNickname());	//昵称
 			MDC.put("ip", this.getRealIP());	//IP
 			MDC.put("act", act);	//动作
