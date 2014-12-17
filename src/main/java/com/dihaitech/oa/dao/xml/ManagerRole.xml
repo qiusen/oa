@@ -62,7 +62,6 @@
 		update `manager_role` set 
               `EMAIL` = #{email}, 
               `ROLE_ID` = #{roleId}, 
-              `CREATETIME` = #{createtime}, 
               `UPDATETIME` = #{updatetime}
         	where ID = #{id}
 	</update>

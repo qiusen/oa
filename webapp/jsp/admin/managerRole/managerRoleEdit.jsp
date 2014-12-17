@@ -29,18 +29,15 @@ function cancleClick(){
         <td align="left"></td>
     </tr>
     <tr>
-        <td align="right" class="l-table-edit-td">角色ID：</td>
-        <td align="left" class="l-table-edit-td"><input name="managerRole.roleId" type="text" id="managerRole.roleId" ltype="text" value="${requestScope.managerRole.roleId}"/></td>
-        <td align="left"></td>
-    </tr>
-    <tr>
-        <td align="right" class="l-table-edit-td">创建时间：</td>
-        <td align="left" class="l-table-edit-td"><input name="managerRole.createtime" type="text" id="managerRole.createtime" ltype="text" value="${requestScope.managerRole.createtime}"/></td>
-        <td align="left"></td>
-    </tr>
-    <tr>
-        <td align="right" class="l-table-edit-td">修改时间：</td>
-        <td align="left" class="l-table-edit-td"><input name="managerRole.updatetime" type="text" id="managerRole.updatetime" ltype="text" value="${requestScope.managerRole.updatetime}"/></td>
+        <td align="right" class="l-table-edit-td">角色：</td>
+        <td align="left" class="l-table-edit-td">
+        <select name="managerRole.roleId" id="managerRole.roleId" >
+        <option value="0">请选择</option>
+        <c:forEach items="${roleList }" var="role">
+        <option value="${role.id }" <c:if test="${role.id == requestScope.managerRole.roleId}">selected="true"</c:if>>${role.rolename }</option>
+        </c:forEach>
+        </select>
+        </td>
         <td align="left"></td>
     </tr>
     <tr>

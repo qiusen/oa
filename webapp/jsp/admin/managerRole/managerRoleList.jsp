@@ -23,7 +23,16 @@ function f_initGrid(){
         //{ display: '主键', name: 'id', width: 50, type: 'int', frozen: true },
 		
 		{ display: '邮箱', name: 'email',type: 'text' , width: '15%'},
-		{ display: '角色ID', name: 'roleId',type: 'text' , width: '15%'},
+		{ display: '角色', name: 'roleId',type: 'text' , width: '15%',render: function (rowdata, rowindex, value)
+        {
+        	var r = "-";
+        	<c:forEach items="${roleList }" var="role">
+        	if(rowdata.roleId==${role.id}){
+                r = "${role.rolename}";
+            }
+            </c:forEach>
+            return r;
+        }  },
 		{ display: '创建时间', name: 'createtime',type: 'text' , width: '15%'},
 		{ display: '修改时间', name: 'updatetime',type: 'text' , width: '15%'}
         ],

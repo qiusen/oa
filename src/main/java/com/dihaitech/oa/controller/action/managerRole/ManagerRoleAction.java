@@ -1,14 +1,17 @@
 package com.dihaitech.oa.controller.action.managerRole;
 
+import java.util.Date;
 import java.util.List;
 
 import com.dihaitech.oa.common.Property;
 import com.dihaitech.oa.controller.action.BaseAction;
+import com.dihaitech.oa.model.ManagerRole;
+import com.dihaitech.oa.model.Role;
+import com.dihaitech.oa.service.IManagerRoleService;
+import com.dihaitech.oa.service.IRoleService;
 import com.dihaitech.oa.util.Page;
 import com.dihaitech.oa.util.TypeUtil;
 import com.dihaitech.oa.util.json.JSONUtil;
-import com.dihaitech.oa.model.ManagerRole;
-import com.dihaitech.oa.service.IManagerRoleService;
 
 /**
  * 用户角色Action
@@ -21,6 +24,8 @@ import com.dihaitech.oa.service.IManagerRoleService;
 public class ManagerRoleAction extends BaseAction {
 	private ManagerRole managerRole = new ManagerRole();
 	private IManagerRoleService managerRoleService;
+	
+	private IRoleService roleService;
 	
 	public ManagerRole getManagerRole() {
 		return managerRole;
@@ -36,6 +41,15 @@ public class ManagerRoleAction extends BaseAction {
 	public void setManagerRoleService(IManagerRoleService managerRoleService) {
 		this.managerRoleService = managerRoleService;
 	}
+	
+	public IRoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(IRoleService roleService) {
+		this.roleService = roleService;
+	}
+
 	/* 
 	 * 用户角色查询
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
@@ -77,6 +91,11 @@ public class ManagerRoleAction extends BaseAction {
 			System.out.println("ManagerRole json:::::::::::::::::::" + json);
 			this.getRequest().setAttribute("json", json);
 			
+			Role role = new Role();
+			role.setStatus(1);
+			List<Role> roleList = roleService.selectAllByStatus(role);
+			this.getRequest().setAttribute("roleList", roleList);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,6 +107,10 @@ public class ManagerRoleAction extends BaseAction {
 	 * @return
 	 */
 	public String add(){
+		Role role = new Role();
+		role.setStatus(1);
+		List<Role> roleList = roleService.selectAllByStatus(role);
+		this.getRequest().setAttribute("roleList", roleList);
 		return "add";
 	}
 	
@@ -96,6 +119,9 @@ public class ManagerRoleAction extends BaseAction {
 	 * @return
 	 */
 	public String addSave(){
+		managerRole.setCreatetime(new Date());
+		managerRole.setUpdatetime(new Date());
+		
 		managerRoleService.addSave(managerRole);
 		return "addSave";
 	}
@@ -116,6 +142,12 @@ public class ManagerRoleAction extends BaseAction {
 		
 		ManagerRole managerRoleVO = managerRoleService.selectManagerRoleById(managerRole);
 		this.getRequest().setAttribute("managerRole", managerRoleVO);
+		
+		Role role = new Role();
+		role.setStatus(1);
+		List<Role> roleList = roleService.selectAllByStatus(role);
+		this.getRequest().setAttribute("roleList", roleList);
+		
 		return "edit";
 	}
 	
@@ -124,6 +156,7 @@ public class ManagerRoleAction extends BaseAction {
 	 * @return
 	 */
 	public String editSave(){
+		managerRole.setUpdatetime(new Date());
 		managerRoleService.editSave(managerRole);
 		return "editSave";
 	}
