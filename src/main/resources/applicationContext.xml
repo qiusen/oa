@@ -118,15 +118,11 @@
 		<property name="FILE_IMAG_MAXSIZE" value="${file.imag.maxsize}"></property>
 		<property name="FILE_IMAG_TYPES" value="${file.imag.types}"></property>
 		<!-- 图片上传预览相关配置end -->
-		<!-- 块相关内容 begin -->
+		<!-- thrift begin -->
 		<!-- 文件发布地址 -->
-		<property name="FILE_PUBLISH_PATH" value="${file.publish.path}"></property>
-		<property name="BLOCK_FOLDER" value="${block.folder}"></property>
-		<property name="BLOCK_INCLUDE_PATH" value="${block.include.path}"></property>
-		<property name="BLOCK_AUTOMATIC_FOLDER" value="${block.automatic.folder}"></property>
-		<property name="BLOCK_MANUAL_FOLDER" value="${block.manual.folder}"></property>
-		<property name="BLOCK_LINK_FOLDER" value="${block.link.folder}"></property>
-		<!-- 块相关内容 end -->
+		<property name="MANAGERCENTER_HOST" value="${managercenter.host}"></property>
+		<property name="MANAGERCENTER_PORT" value="${managercenter.port}"></property>
+		<!-- thrift end -->
 	</bean>
 	
 	<!-- Activiti begin -->

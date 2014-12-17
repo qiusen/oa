@@ -13,6 +13,7 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
+import com.dihaitech.oa.common.Property;
 import com.dihaitech.oa.controller.action.BaseAction;
 import com.dihaitech.oa.model.Catalog;
 import com.dihaitech.oa.model.ManagerRole;
@@ -237,7 +238,7 @@ public class LoginAction extends BaseAction {
 	private Manager tserverLogin(String email, String password){
 		Manager manager = null;
 		try {
-			   TTransport transport = new TFramedTransport(new TSocket("localhost", 19090));
+			   TTransport transport = new TFramedTransport(new TSocket(Property.MANAGERCENTER_HOST, Property.MANAGERCENTER_PORT));
 			   
 			   TBinaryProtocol protocol = new TBinaryProtocol(transport);
 			   //TCompactProtocol protocol = new TCompactProtocol(transport);

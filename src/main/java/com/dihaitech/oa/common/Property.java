@@ -153,6 +153,25 @@ public class Property {
 	 * 友链块文件夹
 	 */
 	public static String BLOCK_LINK_FOLDER;
+	
+	
+	/*
+	 * #管理中心接口地址
+	 * managercenter.host=localhost
+	 * #管理中心接口端口
+	 * managercenter.port=19090
+	 * 
+	 * */
+	
+	/**
+	 * 管理中心接口地址
+	 */
+	public static String MANAGERCENTER_HOST;
+	
+	/**
+	 * 管理中心接口端口
+	 */
+	public static int MANAGERCENTER_PORT;
 
 	public String getBASE() {
 		return BASE;
@@ -384,6 +403,22 @@ public class Property {
 
 	public static void setPAGESIZE(int pAGESIZE) {
 		PAGESIZE = pAGESIZE;
+	}
+
+	public static String getMANAGERCENTER_HOST() {
+		return MANAGERCENTER_HOST;
+	}
+
+	public static void setMANAGERCENTER_HOST(String mANAGERCENTER_HOST) {
+		MANAGERCENTER_HOST = mANAGERCENTER_HOST;
+	}
+
+	public static int getMANAGERCENTER_PORT() {
+		return MANAGERCENTER_PORT;
+	}
+
+	public static void setMANAGERCENTER_PORT(int mANAGERCENTER_PORT) {
+		MANAGERCENTER_PORT = mANAGERCENTER_PORT;
 	}
 
 }
