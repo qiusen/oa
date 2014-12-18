@@ -77,4 +77,11 @@
 			</property>
 	  </bean>
 	  
+	  <!-- 流程 action -->
+	  <bean id="processAction" class="com.dihaitech.oa.controller.action.process.ProcessAction" scope="prototype">
+			<property name="repositoryService">
+				<ref bean="repositoryService" />
+			</property>
+	  </bean>
+	  
 </beans>

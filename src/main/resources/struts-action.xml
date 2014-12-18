@@ -267,5 +267,25 @@
     </package> 
     <!-- 字典Action End -->
     
+    <!-- 流程Action Begin -->
+    <package name="struts-admin-process" namespace="/admin/process" extends="struts-interceptor">
+		<action name="processAction" class="processAction">
+			<result name="success" type="dispatcher">/jsp/admin/process/processList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/process/processAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">processAction</param>
+				<param name="namespace">/admin/process</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">processAction</param>
+				<param name="namespace">/admin/process</param>
+			</result>
+			
+			<interceptor-ref name="common-params-upload"/>
+        </action>
+    </package> 
+    <!-- 流程Action End -->
+    
     
 </struts>
