@@ -119,7 +119,6 @@
 		<property name="FILE_IMAG_TYPES" value="${file.imag.types}"></property>
 		<!-- 图片上传预览相关配置end -->
 		<!-- thrift begin -->
-		<!-- 文件发布地址 -->
 		<property name="MANAGERCENTER_HOST" value="${managercenter.host}"></property>
 		<property name="MANAGERCENTER_PORT" value="${managercenter.port}"></property>
 		<!-- thrift end -->
