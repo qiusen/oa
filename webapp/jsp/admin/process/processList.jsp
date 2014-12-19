@@ -24,7 +24,7 @@ function f_initGrid(){
         { display: '部署时间', name: 'deploymentTime',type: 'text' , width: '15%'},
         { display: '操作',type: 'text' , width: '10%',render: function (rowdata, rowindex, value)
         {
-        	var r = "<a href='javascript:deleteDeployment("+rowdata.id+",\""+rowdata.name+"\")'>删除</a>";
+        	var r = "<a href='javascript:deleteDeployment("+rowdata.id+",\""+rowdata.name+"\")'><img alt='删除' title='删除' src='${base}/ligerUI/skins/icons/delete.gif' style='margin-top:5px;'></a>";
         	
             return r;
         }  }
