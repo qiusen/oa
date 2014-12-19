@@ -121,6 +121,7 @@
 		<!-- thrift begin -->
 		<property name="MANAGERCENTER_HOST" value="${managercenter.host}"></property>
 		<property name="MANAGERCENTER_PORT" value="${managercenter.port}"></property>
+		<property name="MANAGERCENTER_URL" value="${managercenter.url}"></property>
 		<!-- thrift end -->
 	</bean>
 	

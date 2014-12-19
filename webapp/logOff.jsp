@@ -11,7 +11,7 @@ $(function (){
 	window.setTimeout(redirectlogin,3000); 
 });
 function redirectlogin(){
-	window.location="http://localhost:8080/managercenter";
+	window.location="<%=Property.MANAGERCENTER_URL%>";
 }
 </script>
 </head>

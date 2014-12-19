@@ -5,7 +5,7 @@
 <%@ include file="/jsp/common/meta.jsp"%>
 <script type="text/javascript">
 <c:if test="${sessionScope.manager==null}">
-window.location="${base}";
+window.location="window.location="<%=Property.MANAGERCENTER_URL%>";";
 </c:if>
 <c:forEach items="${menuList}" var="menu">
 <c:set value="0" var="catalogIndex" /> 

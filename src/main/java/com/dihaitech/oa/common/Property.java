@@ -160,6 +160,8 @@ public class Property {
 	 * managercenter.host=localhost
 	 * #管理中心接口端口
 	 * managercenter.port=19090
+	 * #管理中心地址
+	 * managercenter.url=http://localhost:8080/managercenter
 	 * 
 	 * */
 	
@@ -172,6 +174,11 @@ public class Property {
 	 * 管理中心接口端口
 	 */
 	public static int MANAGERCENTER_PORT;
+	
+	/**
+	 * 管理中心地址
+	 */
+	public static String MANAGERCENTER_URL;
 
 	public String getBASE() {
 		return BASE;
@@ -419,6 +426,14 @@ public class Property {
 
 	public static void setMANAGERCENTER_PORT(int mANAGERCENTER_PORT) {
 		MANAGERCENTER_PORT = mANAGERCENTER_PORT;
+	}
+
+	public static String getMANAGERCENTER_URL() {
+		return MANAGERCENTER_URL;
+	}
+
+	public static void setMANAGERCENTER_URL(String mANAGERCENTER_URL) {
+		MANAGERCENTER_URL = mANAGERCENTER_URL;
 	}
 
 }
