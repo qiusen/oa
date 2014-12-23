@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dihaitech.oa.dao.ILeaveBillDAO">
+	
+	<cache flushInterval="600000" eviction="LRU" type="org.mybatis.caches.oscache.OSCache"/>
+	
+	<sql id="leaveBillLikeWhere">
+		<where>
+            <if test ="id != null and id > -1">
+				and `ID` = #{id}
+			</if>
+	        <if test ="email != null and email != ''">
+			    and `EMAIL` like '%${email}%'
+		    </if>
+	        <if test ="reason != null and reason != ''">
+			    and `REASON` like '%${reason}%'
+		    </if>
+            <if test ="type != null and type > -1">
+				and `TYPE` = #{type}
+			</if>
+	        <if test ="description != null and description != ''">
+			    and `DESCRIPTION` like '%${description}%'
+		    </if>
+            <if test ="status != null and status > -1">
+				and `STATUS` = #{status}
+			</if>
+	        <if test ="creator != null and creator != ''">
+			    and `CREATOR` like '%${creator}%'
+		    </if>
+	        <if test ="updator != null and updator != ''">
+			    and `UPDATEOR` like '%${updator}%'
+		    </if>
+		</where>
+	</sql>
+	
+	<sql id="leaveBillPage">
+		<if test="null != start">
+		  limit #{start},#{pageSize}
+		</if>
+	</sql>
+	
+	<sql id="leaveBillField">
+		`ID`, `EMAIL`, `REASON`, `TYPE`, `DESCRIPTION`, `STATUS`, `BEGINTIME`, `ENDTIME`, `CREATOR`, `CREATETIME`, `UPDATOR`, `UPDATETIME`
+	</sql>
+	
+	<resultMap id="leaveBillMap" type="leaveBill">
+	    	<result property="id" column="ID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="email" column="EMAIL" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="reason" column="REASON" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="type" column="TYPE" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="description" column="DESCRIPTION" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="status" column="STATUS" javaType="java.lang.Integer" jdbcType="INTEGER" />
+	    	<result property="begintime" column="BEGINTIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="endtime" column="ENDTIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="creator" column="CREATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="createtime" column="CREATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	    	<result property="updator" column="UPDATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+	    	<result property="updatetime" column="UPDATETIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="addSaveLeaveBill" parameterType="leaveBill">
+		insert into `leave_bill` (
+           `EMAIL`, 
+           `REASON`, 
+           `TYPE`, 
+           `DESCRIPTION`, 
+           `STATUS`, 
+           `BEGINTIME`, 
+           `ENDTIME`, 
+           `CREATOR`, 
+           `CREATETIME`, 
+           `UPDATOR`, 
+           `UPDATETIME`
+		) values 
+		(
+            #{email}, 
+            #{reason}, 
+            #{type}, 
+            #{description}, 
+            #{status}, 
+            #{begintime}, 
+            #{endtime}, 
+            #{creator}, 
+            #{createtime}, 
+            #{updator}, 
+            #{updatetime}
+		)
+		<selectKey keyProperty="id"  resultType="java.lang.Integer">
+			select last_insert_id() as id from `leave_bill` limit 1
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteByIds" parameterType="String">
+		delete from `leave_bill` ${_parameter}
+	</delete>
+	
+	<update id="editSaveLeaveBill" parameterType="leaveBill">
+		update `leave_bill` set 
+              `EMAIL` = #{email}, 
+              `REASON` = #{reason}, 
+              `TYPE` = #{type}, 
+              `DESCRIPTION` = #{description}, 
+              `STATUS` = #{status}, 
+              `BEGINTIME` = #{begintime}, 
+              `ENDTIME` = #{endtime}, 
+              `UPDATOR` = #{updator}, 
+              `UPDATETIME` = #{updatetime}
+        	where ID = #{id}
+	</update>
+	
+	<select id="selectLeaveBillById" parameterType="leaveBill" resultMap="leaveBillMap"  >
+		SELECT * FROM `leave_bill` where ID = #{id}
+	</select>
+	
+	<select id="getLeaveBillCount" parameterType="leaveBill" resultType="Long" >
+		select count(*) from `leave_bill`
+		<include refid="leaveBillLikeWhere" />
+	</select>
+	
+	<select id="selectAll" parameterType="leaveBill" resultMap="leaveBillMap" >
+		select * from `leave_bill`
+	</select>
+	
+	<select id="selectLeaveBillLike" parameterType="leaveBill" resultMap="leaveBillMap" >
+		SELECT <include refid="leaveBillField" /> FROM `leave_bill`
+	        <include refid="leaveBillLikeWhere" />
+			order by ID desc
+	        <include refid="leaveBillPage" /> 
+	</select>
+</mapper>

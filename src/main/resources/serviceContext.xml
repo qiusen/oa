@@ -31,4 +31,8 @@
 	  
 	  <!-- 用户角色 service -->	
 	  <bean id="managerRoleService" class="com.dihaitech.oa.service.impl.ManagerRoleServiceImpl"/>
+	  
+	  <!-- 请假单 service -->	
+	  <bean id="leaveBillService" class="com.dihaitech.oa.service.impl.LeaveBillServiceImpl"/>
+	  
 </beans>

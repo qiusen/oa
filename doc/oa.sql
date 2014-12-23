@@ -121,3 +121,41 @@ CREATE TABLE `DICT` (
   PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典';
 
+
+
+DROP TABLE IF EXISTS LEAVE_BILL CASCADE;
+CREATE TABLE `LEAVE_BILL` (
+  `ID` int(11) NOT NULL auto_increment,
+  `EMAIL` varchar(255) NOT NULL COMMENT '申请人EMAIL',
+  `REASON` varchar(255) NOT NULL COMMENT '原因',
+  `TYPE` int(2) NOT NULL COMMENT '类型：1、病假；2、事假；3、年假；4、调休；5、婚假；6、产检假；7、陪产假；8、丧假',
+  `DESCRIPTION` TEXT default NULL COMMENT '描述',
+  `STATUS` int(2) NOT NULL COMMENT '状态：0、未开始；1、审批中；2、已完成',
+  `BEGINTIME` datetime default '2000-01-01 00:00:00' COMMENT '开始时间',
+  `ENDTIME` datetime default '2000-01-01 00:00:00' COMMENT '结束时间',
+  `CREATOR` varchar(255) NOT NULL COMMENT '创建人',
+  `CREATETIME` datetime default '2000-01-01 00:00:00' COMMENT '创建时间',
+  `UPDATOR` varchar(255) default NULL COMMENT '修改人',
+  `UPDATETIME` datetime default '2000-01-01 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='请假单';
+insert into MODULE(`MODULENAME`,`MODULEURL`,`MODULEACT`,`CATALOG_ID`,`STATUS`,`CREATETIME`)values('请假单','/admin/leaveBill','leaveBillAction',4,1,'2012-08-01 08:08:08');
+
+insert into MODULE(`MODULENAME`,`MODULEURL`,`MODULEACT`,`CATALOG_ID`,`STATUS`,`CREATETIME`)values('假期申请','/admin/workflow','leaveBillWorkflowAction',4,1,'2012-08-01 08:08:08');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -84,4 +84,18 @@
 			</property>
 	  </bean>
 	  
+	  <!-- 请假单 action -->
+	  <bean id="leaveBillAction" class="com.dihaitech.oa.controller.action.leaveBill.LeaveBillAction" scope="prototype">
+			<property name="leaveBillService">
+				<ref bean="leaveBillService" />
+			</property>
+	  </bean>
+	  
+	  <!-- 请假申请 action -->
+	  <bean id="leaveBillWorkflowAction" class="com.dihaitech.oa.controller.action.workflow.LeaveBillWorkflowAction" scope="prototype">
+			<property name="leaveBillService">
+				<ref bean="leaveBillService" />
+			</property>
+	  </bean>
+	  
 </beans>

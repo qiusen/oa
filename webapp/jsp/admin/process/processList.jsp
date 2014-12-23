@@ -121,10 +121,7 @@ function itemclick(item)
 </head>
 <body style="padding:6px; overflow:hidden;">
 <form name="moduleForm" id="moduleForm" method="post" action="moduleAction.${actionExt}" >
-<div id="searchbar">
-   流程名称：<input id="module.modulename" type="text" name="module.modulename" value=""/>
-    <input id="btnOK" type="submit" value="查询"/>
-</div>
+
 <div id="deploymentmaingrid" style="margin:0; padding:0"></div>
     <div id="maingrid" style="margin:0; padding:0"></div>
    

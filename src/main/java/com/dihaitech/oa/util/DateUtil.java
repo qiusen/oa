@@ -11,12 +11,12 @@ import org.joda.time.format.DateTimeFormat;
 public class DateUtil {
 
 	/**
-	 * 精确到日期
+	 * 精确到日期 yyyy-MM-dd
 	 */
 	public static final String DATE_FORM = "yyyy-MM-dd";
 
 	/**
-	 * 精确到秒
+	 * 精确到秒 yyyy-MM-dd HH:mm:ss
 	 */
 	public static final String TIME_FORM = "yyyy-MM-dd HH:mm:ss";
 
@@ -25,17 +25,17 @@ public class DateUtil {
 	private static final String TIME_REG = "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2}";
 
 	/**
-	 * 连续格式
+	 * 连续格式 yyyyMMddHHmmssSSS
 	 */
 	public static final String DATE_TIME_CONTINUOUS_FORM = "yyyyMMddHHmmssSSS";
 
 	/**
-	 * 日期连续格式
+	 * 日期连续格式 yyyyMMdd
 	 */
 	public static final String DATE_CONTINUOUS_FORM = "yyyyMMdd";
 
 	/**
-	 * 时间连续格式
+	 * 时间连续格式 HHmmssSSS
 	 */
 	public static final String TIME_CONTINUOUS_FORM = "HHmmssSSS";
 	

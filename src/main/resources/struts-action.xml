@@ -287,5 +287,57 @@
     </package> 
     <!-- 流程Action End -->
     
+    <!-- 请假单Action Begin -->
+    <package name="struts-admin-leaveBill" namespace="/admin/leaveBill" extends="struts-interceptor">
+		<action name="leaveBillAction" class="leaveBillAction">
+			<result name="success" type="dispatcher">/jsp/admin/leaveBill/leaveBillList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/leaveBill/leaveBillAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">leaveBillAction</param>
+				<param name="namespace">/admin/leaveBill</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/leaveBill/leaveBillEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">leaveBillAction</param>
+				<param name="namespace">/admin/leaveBill</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">leaveBillAction</param>
+				<param name="namespace">/admin/leaveBill</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 请假单Action End -->
+    
+    <!-- 工作流Action Begin -->
+    <package name="struts-admin-workflow" namespace="/admin/workflow" extends="struts-interceptor">
+		<action name="leaveBillWorkflowAction" class="leaveBillWorkflowAction">
+			<result name="success" type="dispatcher">/jsp/admin/workflow/leaveBillWorkflowList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/workflow/leaveBillWorkflowAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">leaveBillWorkflowAction</param>
+				<param name="namespace">/admin/workflow</param>
+			</result>
+
+			<result name="edit" type="dispatcher">/jsp/admin/workflow/leaveBillWorkflowEdit.jsp</result>
+			<result name="editSave" type="redirectAction">
+				<param name="actionName">leaveBillWorkflowAction</param>
+				<param name="namespace">/admin/workflow</param>
+			</result>
+			
+			<result name="deleteSuccess" type="redirectAction">
+				<param name="actionName">leaveBillWorkflowAction</param>
+				<param name="namespace">/admin/workflow</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 请假单Action End -->
+    
     
 </struts>
