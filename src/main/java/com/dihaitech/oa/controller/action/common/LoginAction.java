@@ -125,6 +125,8 @@ public class LoginAction extends BaseAction {
 				ManagerRole managerRole = new ManagerRole();
 				managerRole.setEmail(managerVO.getEmail());
 				
+				System.out.println("login departmentId: " + managerVO.getDepartment_id());
+				
 				ManagerRole managerRoleVO = managerRoleService.selectManagerRoleByEmail(managerRole);
 				
 				if(managerRoleVO==null){		//没有权限记录

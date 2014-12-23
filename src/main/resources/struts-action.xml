@@ -334,6 +334,11 @@
 				<param name="namespace">/admin/workflow</param>
 			</result>
 			
+			<result name="start" type="redirectAction">
+				<param name="actionName">leaveBillWorkflowAction</param>
+				<param name="namespace">/admin/workflow</param>
+			</result>
+			
 			<interceptor-ref name="common-params"/>
         </action>
     </package> 

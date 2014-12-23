@@ -51,7 +51,7 @@ public class SuperManagerListener implements TaskListener{
 		int departmentId = manager.getDepartment_id();
 		
 		String assignee = "";
-		
+		System.out.println("departmentId: " + departmentId);
 		Department department = this.tserverDepartment(departmentId);
 		if(department!=null){
 			//自己是本部门主管，获取上一级部门信息
@@ -83,7 +83,7 @@ public class SuperManagerListener implements TaskListener{
 			   
 			   Map<String, String> param = new HashMap<String, String>();
 
-			   param.put("tName", "manager");
+			   param.put("tName", "department");
 			   param.put("sName", "selectDepartmentById");
 			   param.put("pValue", String.valueOf(departmentId));
 			   

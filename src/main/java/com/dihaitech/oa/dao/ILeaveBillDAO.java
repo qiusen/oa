@@ -69,4 +69,11 @@ public interface ILeaveBillDAO {
 	 * @return
 	 */
 	public List<LeaveBill> selectAll();
+
+	/**
+	 * 根据ID修改状态
+	 * @param leaveBill
+	 * @return
+	 */
+	public int editStatusById(LeaveBill leaveBill);
 }

@@ -1,7 +1,14 @@
 package com.dihaitech.oa.controller.action.workflow;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 
 import com.dihaitech.oa.common.Property;
 import com.dihaitech.oa.controller.action.BaseAction;
@@ -25,6 +32,10 @@ public class LeaveBillWorkflowAction extends BaseAction {
 	private LeaveBill leaveBill = new LeaveBill();
 	private ILeaveBillService leaveBillService;
 	
+	private RuntimeService runtimeService;
+	
+	private TaskService taskService;
+	
 	public LeaveBill getLeaveBill() {
 		return leaveBill;
 	}
@@ -39,6 +50,23 @@ public class LeaveBillWorkflowAction extends BaseAction {
 	public void setLeaveBillService(ILeaveBillService leaveBillService) {
 		this.leaveBillService = leaveBillService;
 	}
+	
+	public RuntimeService getRuntimeService() {
+		return runtimeService;
+	}
+
+	public void setRuntimeService(RuntimeService runtimeService) {
+		this.runtimeService = runtimeService;
+	}
+
+	public TaskService getTaskService() {
+		return taskService;
+	}
+
+	public void setTaskService(TaskService taskService) {
+		this.taskService = taskService;
+	}
+
 	/* 
 	 * 请假单查询
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
@@ -230,7 +258,42 @@ public class LeaveBillWorkflowAction extends BaseAction {
 	}
 	
 	
+	/**
+	 * 开始
+	 * @return
+	 */
 	public String start(){
+		String idStr = this.getRequest().getParameter("id");
+
+		int id = TypeUtil.stringToInt(idStr);
+		if(id<=0){
+			return null;
+		}
+		
+		String processDefinitionKey = "leaveBill";
+		Map<String, Object> variables = new HashMap<String, Object>();
+		variables.put("type", "leaveBill");
+		variables.put("id", idStr);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, variables); 
+		
+		//流程实例ID
+		String processInstanceId = processInstance.getId();
+		
+		//当前处理人
+		Manager manager = (Manager)this.getSession().getAttribute("manager");
+		String assignee = manager.getEmail();
+		
+		Task task = taskService.createTaskQuery()
+					.processInstanceId(processInstanceId)
+					.taskAssignee(assignee)
+					.singleResult();
+		
+		taskService.complete(task.getId());
+		
+		leaveBill.setId(id);
+		leaveBill.setStatus(1);
+		leaveBillService.editStatusById(leaveBill);
+
 		return "start";
 	}
 }

@@ -70,4 +70,14 @@ public class LeaveBillServiceImpl implements ILeaveBillService {
 	public LeaveBill selectLeaveBillById(LeaveBill leaveBill) {
 		return leaveBillDAO.selectLeaveBillById(leaveBill);
 	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dihaitech.oa.service.ILeaveBillService#editStatusById(com.dihaitech.oa.model.LeaveBill)
+	 */
+	@Override
+	public int editStatusById(LeaveBill leaveBill) {
+		// TODO Auto-generated method stub
+		return leaveBillDAO.editStatusById(leaveBill);
+	}
 }

@@ -96,6 +96,12 @@
 			<property name="leaveBillService">
 				<ref bean="leaveBillService" />
 			</property>
+			<property name="runtimeService">
+				<ref bean="runtimeService" />
+			</property>
+			<property name="taskService">
+				<ref bean="taskService" />
+			</property>
 	  </bean>
 	  
 </beans>

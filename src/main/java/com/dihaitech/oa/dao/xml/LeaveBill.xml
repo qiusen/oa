@@ -127,4 +127,10 @@
 			order by ID desc
 	        <include refid="leaveBillPage" /> 
 	</select>
+	
+	<update id="editStatusById" parameterType="leaveBill">
+		update `leave_bill` set 
+              `STATUS` = #{status}
+        	where ID = #{id}
+	</update>
 </mapper>

@@ -63,4 +63,11 @@ public interface ILeaveBillService {
 	 * @return
 	 */
 	public int deleteByIds(String str);
+	
+	/**
+	 * 根据ID修改状态
+	 * @param leaveBill
+	 * @return
+	 */
+	public int editStatusById(LeaveBill leaveBill);
 }
