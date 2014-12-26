@@ -1,9 +1,7 @@
 package com.dihaitech.oa.controller.action.workflow;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -271,10 +269,13 @@ public class LeaveBillWorkflowAction extends BaseAction {
 		}
 		
 		String processDefinitionKey = "leaveBill";
-		Map<String, Object> variables = new HashMap<String, Object>();
-		variables.put("type", "leaveBill");
-		variables.put("id", idStr);
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, variables); 
+//		Map<String, Object> variables = new HashMap<String, Object>();
+//		variables.put("type", "leaveBill");
+//		variables.put("id", idStr);
+		//使用“-”连接key和业务表单ID，作为businessKey 使用来关联业务，leaveBill-1
+		String businessKey = processDefinitionKey + "-" + id;
+		//开始流程
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey); 
 		
 		//流程实例ID
 		String processInstanceId = processInstance.getId();
@@ -283,6 +284,7 @@ public class LeaveBillWorkflowAction extends BaseAction {
 		Manager manager = (Manager)this.getSession().getAttribute("manager");
 		String assignee = manager.getEmail();
 		
+		//当前处理人提交
 		Task task = taskService.createTaskQuery()
 					.processInstanceId(processInstanceId)
 					.taskAssignee(assignee)
@@ -296,4 +298,6 @@ public class LeaveBillWorkflowAction extends BaseAction {
 
 		return "start";
 	}
+	
+	
 }

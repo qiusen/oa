@@ -79,8 +79,7 @@
               `MODULEURL` = #{moduleurl}, 
               `MODULEACT` = #{moduleact}, 
               `CATALOG_ID` = #{catalogId}, 
-              `STATUS` = #{status}, 
-              `CREATETIME` = #{createtime}
+              `STATUS` = #{status}
         	where ID = #{id}
 	</update>
 	

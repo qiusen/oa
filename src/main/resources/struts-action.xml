@@ -342,7 +342,24 @@
 			<interceptor-ref name="common-params"/>
         </action>
     </package> 
-    <!-- 请假单Action End -->
+    <!-- 工作流Action End -->
+    
+    <!-- 审批Action Begin -->
+    <package name="struts-admin-approve" namespace="/admin/approve" extends="struts-interceptor">
+		<action name="workflowApproveAction" class="workflowApproveAction">
+			<result name="success" type="dispatcher">/jsp/admin/approve/approveList.jsp</result>
+			
+			<result name="leaveBillApprove" type="dispatcher">/jsp/admin/approve/leaveBillApprove.jsp</result>
+			
+			<result name="approveComplete" type="redirectAction">
+				<param name="actionName">workflowApproveAction</param>
+				<param name="namespace">/admin/approve</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+        </action>
+    </package> 
+    <!-- 审批Action End -->
     
     
 </struts>

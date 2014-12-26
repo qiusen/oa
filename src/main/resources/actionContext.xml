@@ -104,4 +104,17 @@
 			</property>
 	  </bean>
 	  
+	  <!-- 请假审批 action -->
+	  <bean id="workflowApproveAction" class="com.dihaitech.oa.controller.action.approve.WorkflowApproveAction" scope="prototype">
+			<property name="leaveBillService">
+				<ref bean="leaveBillService" />
+			</property>
+			<property name="runtimeService">
+				<ref bean="runtimeService" />
+			</property>
+			<property name="taskService">
+				<ref bean="taskService" />
+			</property>
+	  </bean>
+	  
 </beans>
