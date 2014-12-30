@@ -107,6 +107,8 @@ $(function (){
     	</td>
     	<td align="left">
     	<select name="beginHour" id="beginHour" style="float:left;">
+    	<!-- 早9晚6 -->
+    		<!-- 
     		<option value="01">01</option>
     		<option value="02">02</option>
   		<option value="03">03</option>
@@ -115,6 +117,7 @@ $(function (){
     		<option value="06">06</option>
     		<option value="07">07</option>
     		<option value="08">08</option>
+    		 -->
     		<option value="09">09</option>
     		<option value="10">10</option>
     		<option value="11">11</option>
@@ -125,12 +128,14 @@ $(function (){
     		<option value="16">16</option>
     		<option value="17">17</option>
     		<option value="18">18</option>
+    		<!--
     		<option value="19">19</option>
     		<option value="20">20</option>
     		<option value="21">21</option>
     		<option value="22">22</option>
     		<option value="23">23</option>
     		<option value="24">24</option>
+    		 -->
     	</select>
     	<select name="beginMinute" id="beginMinute" style="float:left;">
     		<option value="00">00</option>
@@ -144,6 +149,7 @@ $(function (){
     	</td>
     	<td align="left">
     	<select name="endHour" id="endHour" >
+    		<!--
     		<option value="01">01</option>
     		<option value="02">02</option>
   		<option value="03">03</option>
@@ -152,6 +158,7 @@ $(function (){
     		<option value="06">06</option>
     		<option value="07">07</option>
     		<option value="08">08</option>
+    		 -->
     		<option value="09">09</option>
     		<option value="10">10</option>
     		<option value="11">11</option>
@@ -162,12 +169,14 @@ $(function (){
     		<option value="16">16</option>
     		<option value="17">17</option>
     		<option value="18">18</option>
+    		<!--
     		<option value="19">19</option>
     		<option value="20">20</option>
     		<option value="21">21</option>
     		<option value="22">22</option>
     		<option value="23">23</option>
     		<option value="24">24</option>
+    		 -->
     	</select>
     	<select name="endMinute" id="endMinute" >
     		<option value="00">00</option>

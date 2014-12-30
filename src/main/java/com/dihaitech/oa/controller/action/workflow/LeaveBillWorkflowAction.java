@@ -1,9 +1,12 @@
 package com.dihaitech.oa.controller.action.workflow;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -45,6 +48,8 @@ public class LeaveBillWorkflowAction extends BaseAction {
 	private HistoryService historyService;
 	
 	private RepositoryService repositoryService;
+	
+	private IdentityService identityService;
 	
 	public LeaveBill getLeaveBill() {
 		return leaveBill;
@@ -91,6 +96,14 @@ public class LeaveBillWorkflowAction extends BaseAction {
 
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
+	}
+
+	public IdentityService getIdentityService() {
+		return identityService;
+	}
+
+	public void setIdentityService(IdentityService identityService) {
+		this.identityService = identityService;
 	}
 
 	/* 
@@ -302,15 +315,21 @@ public class LeaveBillWorkflowAction extends BaseAction {
 //		variables.put("id", idStr);
 		//使用“-”连接key和业务表单ID，作为businessKey 使用来关联业务，leaveBill-1
 		String businessKey = processDefinitionKey + "-" + id;
-		//开始流程
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey); 
-		
-		//流程实例ID
-		String processInstanceId = processInstance.getId();
 		
 		//当前处理人
 		Manager manager = (Manager)this.getSession().getAttribute("manager");
 		String assignee = manager.getEmail();
+		
+		Map<String, Object> variables = new HashMap<String, Object>();
+		variables.put("days", 6);
+		//开始流程
+		identityService.setAuthenticatedUserId(assignee);	//设置流程发起人********
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey, variables); 
+		
+		//流程实例ID
+		String processInstanceId = processInstance.getId();
+		
+		
 		
 		//当前处理人提交
 		Task task = taskService.createTaskQuery()

@@ -108,6 +108,9 @@
 			<property name="repositoryService">
 				<ref bean="repositoryService" />
 			</property>
+			<property name="identityService">
+				<ref bean="identityService" />
+			</property>
 	  </bean>
 	  
 	  <!-- 请假审批 action -->
