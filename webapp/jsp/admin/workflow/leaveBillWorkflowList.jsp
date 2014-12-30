@@ -52,7 +52,7 @@ function f_initGrid(){
             }
             return h;
         } },
-		{ display: '内容', name: 'description',type: 'text' , width: '15%'},
+		{ display: '描述', name: 'description',type: 'text' , width: '15%'},
 		{ display: '状态', name: 'status',type: 'text' , width: '10%',render: function (rowdata, rowindex, value)
         {
         	var h = "-";
@@ -81,10 +81,10 @@ function f_initGrid(){
                 h = "<a href='${base}/admin/workflow/leaveBillWorkflowAction!start.${actionExt}?id="+rowdata.id+"'>提交</a> <a href='${base}/admin/workflow/leaveBillWorkflowAction!edit.${actionExt}?id="+rowdata.id+"'>修改</a> <a href='javascript:deleteData("+rowdata.id+")'>删除</a>";
             }
             if(rowdata.status==1){
-                h = "审批中";
+                h = "<a href='${base}/admin/workflow/leaveBillWorkflowAction!viewCurrentPng.${actionExt}?businessKey=leaveBill-"+rowdata.id+"' target='_blank'>查看流程图</a>";
             }
             if(rowdata.status==2){
-                h = "已完成";
+                h = "<a href='${base}/admin/workflow/leaveBillWorkflowAction!viewComments.${actionExt}?businessKey=leaveBill-"+rowdata.id+"' >查看审核记录</a>";
             }
             
             return h;

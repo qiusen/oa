@@ -3,9 +3,17 @@ package com.dihaitech.oa.controller.action.workflow;
 import java.util.Date;
 import java.util.List;
 
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
 import com.dihaitech.oa.common.Property;
@@ -33,6 +41,10 @@ public class LeaveBillWorkflowAction extends BaseAction {
 	private RuntimeService runtimeService;
 	
 	private TaskService taskService;
+	
+	private HistoryService historyService;
+	
+	private RepositoryService repositoryService;
 	
 	public LeaveBill getLeaveBill() {
 		return leaveBill;
@@ -63,6 +75,22 @@ public class LeaveBillWorkflowAction extends BaseAction {
 
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;
+	}
+
+	public HistoryService getHistoryService() {
+		return historyService;
+	}
+
+	public void setHistoryService(HistoryService historyService) {
+		this.historyService = historyService;
+	}
+
+	public RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
 	}
 
 	/* 
@@ -290,6 +318,12 @@ public class LeaveBillWorkflowAction extends BaseAction {
 					.taskAssignee(assignee)
 					.singleResult();
 		
+		//添加批注
+		String authenticatedUserId = manager.getEmail(); 
+		Authentication.setAuthenticatedUserId(authenticatedUserId);
+		String message = "申请";
+		taskService.addComment(task.getId(), processInstanceId, message);
+		
 		taskService.complete(task.getId());
 		
 		leaveBill.setId(id);
@@ -299,5 +333,99 @@ public class LeaveBillWorkflowAction extends BaseAction {
 		return "start";
 	}
 	
+	/**
+	 * 查看审批记录
+	 * @return
+	 */
+	public String viewComments(){
+		String businessKey = this.getRequest().getParameter("businessKey");
+		
+		HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
+						.processInstanceBusinessKey(businessKey)
+						.singleResult();
+		
+		
+		String processInstanceId = hpi.getId();
+		
+		//流程实例ID*********
+		System.out.println("hpi.getId()----------" + hpi.getId());
+		List<Comment> commentList = taskService.getProcessInstanceComments(processInstanceId);
+		//流程
+		long c = 0;
+		StringBuffer json = new StringBuffer("\"Rows\":[");
+		if(commentList!=null && commentList.size()>0){
+			c = commentList.size();
+			Comment commentTemp = null;
+			for(int i=0;i<commentList.size();i++){
+				commentTemp = commentList.get(i);
+				if(i>0){
+					json.append(",");
+				}
+				json.append("{\"id\":\""+commentTemp.getId()
+						+"\",\"userId\":\""+commentTemp.getUserId()
+						+"\",\"time\":\""+DateUtil.dateToString(commentTemp.getTime(), DateUtil.DATE_FORMAT_A)
+						+"\",\"message\":\""+commentTemp.getFullMessage()
+						+"\"}");
+				
+			}
+		}
+		json.append("], \"Total\":" + c);
+
+		System.out.println("Task json:::::::::::::::::::" + json);
+		this.getRequest().setAttribute("json", json.toString());
+		
+		String business = businessKey.split("-")[0];
+		String bidStr = businessKey.split("-")[1];
+		if(business.equals("leaveBill")){	//请假单
+			int bid = TypeUtil.stringToInt(bidStr);
+			if(bid<=0){
+				return null;
+			}
+			LeaveBill leaveBill = new LeaveBill();
+			leaveBill.setId(bid);
+			LeaveBill leaveBillVO = leaveBillService.selectLeaveBillById(leaveBill);
+			this.getRequest().setAttribute("leaveBill", leaveBillVO);
+			
+		}
+		
+		return "viewComments";
+	}
 	
+	/**
+	 * 查看当前流程图
+	 * @return
+	 */
+	public String viewCurrentPng(){
+		
+		String businessKey = this.getRequest().getParameter("businessKey");
+		
+		HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
+						.processInstanceBusinessKey(businessKey)
+						.singleResult();
+		
+		//获取流程定义
+		String processDefinitionId = hpi.getProcessDefinitionId();
+		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()	//查询act_re_prodef表
+							.processDefinitionId(processDefinitionId)
+							.singleResult();
+		
+		this.getRequest().setAttribute("processDefinition", processDefinition);
+		
+		//画DIV
+		//先获取流程定义实体，只有流程定义实体中才有坐标信息
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(processDefinitionId);
+		
+		//根据任务ID，获取流程实例，根据流程实例获取当前活动对象ID
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+						.processInstanceId(hpi.getId())
+						.singleResult();
+		String activityId = processInstance.getActivityId();
+		
+		//查询当前活动对象,获取坐标
+		ActivityImpl ai = processDefinitionEntity.findActivity(activityId);
+		this.getRequest().setAttribute("ai", ai);
+		
+		//使用审批时的流程图JSP文件
+		return "viewCurrentPng";
+	}
 }

@@ -7,7 +7,7 @@
 		<!-- 登录登出的Action -->
 		<action name="login" class="login">
 			<result name="success" type="redirect">/jsp/main.jsp</result>
-			<result name="login" type="dispatcher">/index.jsp</result>
+			<result name="loginErr" type="dispatcher">/loginErr.jsp</result>
 			<result name="logOff" type="redirect">/logOff.jsp</result>
 			<interceptor-ref name="common-params" />
 		</action>
@@ -339,6 +339,8 @@
 				<param name="namespace">/admin/workflow</param>
 			</result>
 			
+			<result name="viewComments" type="dispatcher">/jsp/admin/workflow/workflowComments.jsp</result>
+			<result name="viewCurrentPng" type="dispatcher">/jsp/admin/approve/viewCurrentPng.jsp</result>
 			<interceptor-ref name="common-params"/>
         </action>
     </package> 
@@ -355,6 +357,8 @@
 				<param name="actionName">workflowApproveAction</param>
 				<param name="namespace">/admin/approve</param>
 			</result>
+			
+			<result name="viewCurrentPng" type="dispatcher">/jsp/admin/approve/viewCurrentPng.jsp</result>
 			
 			<interceptor-ref name="common-params"/>
         </action>

@@ -115,7 +115,7 @@ public class LoginAction extends BaseAction {
 				//若帐号被冻结  登录失败
 				if(managerVO.getStatus()==0){
 					this.getRequest().setAttribute("errorStr", "您的帐号存在问题（已失效），请联系管理员！！！");
-					return "login";
+					return "loginErr";
 				}
 //				//记录最后登录的时间和IP
 //				managerVO.setLogintime(new Date());
@@ -222,7 +222,7 @@ public class LoginAction extends BaseAction {
 				this.recordLogs(logger, "login", managerVO.getNickname() + " 登录");
 			}else{
 				this.getRequest().setAttribute("errorStr", "用户名或密码错误");
-				return "login";
+				return "loginErr";
 			}
 			// 暂时用status做身份处理
 //			if (managerVO.getStatus()==3){

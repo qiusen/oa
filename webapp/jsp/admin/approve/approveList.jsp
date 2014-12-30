@@ -25,7 +25,7 @@ function f_initGrid(){
         { display: '操作', type: 'text' , width: '20%',render: function (rowdata, rowindex, value)
         {
         	var r = "<a href='javascript:approve("+rowdata.id+")'>办理</a>";
-        	
+        		r += " <a href='javascript:viewCurrentPng("+rowdata.id+")'>查看流程图</a>";
             return r;
         }  }
         ],
@@ -58,6 +58,10 @@ function approve(taskId){
 	window.location="${base}/admin/approve/workflowApproveAction!approve.${actionExt}?taskId=" + taskId;
 }
 
+function viewCurrentPng(taskId){
+	window.open("${base}/admin/approve/workflowApproveAction!viewCurrentPng.${actionExt}?taskId=" + taskId);
+}
+
 </script>
 <style type="text/css">
         .l-case-title{font-weight:bold; margin-top:20px;margin-bottom:20px;}
@@ -66,8 +70,7 @@ function approve(taskId){
 <body style="padding:6px; overflow:hidden;">
 <form name="moduleForm" id="moduleForm" method="post" action="moduleAction.${actionExt}" >
 
-<div id="deploymentmaingrid" style="margin:0; padding:0"></div>
-    <div id="maingrid" style="margin:0; padding:0"></div>
+<div id="maingrid" style="margin:0; padding:0"></div>
    
 
   <div style="display:none;">

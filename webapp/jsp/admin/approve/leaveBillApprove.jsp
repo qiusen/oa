@@ -4,6 +4,44 @@
 <title>请假单办理</title>
 <%@ include file="/jsp/common/meta.jsp"%>
 <script language="javascript">
+var resultListData = {${requestScope.json}} ;
+
+var manager, g;
+
+
+
+$(f_initGrid);
+function f_initGrid(){
+    
+    g = manager = $("#maingrid").ligerGrid({
+    	title:'批注',
+        columns: [
+        { display: 'ID', name: 'id', width: '15%', type: 'text', frozen: true },
+        { display: '批注人', name: 'userId',type: 'text' , width: '20%'},
+        { display: '批注时间', name: 'time',type: 'text' , width: '20%'},
+        { display: '批注信息', name: 'message',type: 'text' , width: '30%'}
+        ],
+        onSelectRow: function (rowdata, rowindex)
+        {
+            $("#txtrowindex").val(rowindex);
+        },
+        enabledEdit: true,clickToEdit:false, isScroll: true,
+        rownumbers:true,
+        data: resultListData,
+        record: resultListData.Total,
+        usePager :false,
+        width: '70%',height: '40%',
+        onReload: function() {
+        	search();
+        }//,
+       
+        //isScroll: false, 
+        
+                                 
+    });
+
+    
+}
 function checkForm(){
 	return true;
 }
@@ -94,7 +132,13 @@ function completeClick(cv){
 	<input type="button" value="取消" class="l-button l-button-reset" onclick="javascript:cancleClick();"/>
     	</td>
     </tr>
+    
 </table>
+    <div id="maingrid" style="margin:20px; padding:0"></div>
+   
+
+  <div style="display:none;">
+</div>
 </form>
 </body>
 </html>

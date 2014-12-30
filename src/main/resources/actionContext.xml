@@ -102,6 +102,12 @@
 			<property name="taskService">
 				<ref bean="taskService" />
 			</property>
+			<property name="historyService">
+				<ref bean="historyService" />
+			</property>
+			<property name="repositoryService">
+				<ref bean="repositoryService" />
+			</property>
 	  </bean>
 	  
 	  <!-- 请假审批 action -->
@@ -114,6 +120,9 @@
 			</property>
 			<property name="taskService">
 				<ref bean="taskService" />
+			</property>
+			<property name="repositoryService">
+				<ref bean="repositoryService" />
 			</property>
 	  </bean>
 	  

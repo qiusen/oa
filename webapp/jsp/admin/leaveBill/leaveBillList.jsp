@@ -52,7 +52,7 @@ function f_initGrid(){
             }
             return h;
         } },
-		{ display: '内容', name: 'description',type: 'text' , width: '15%'},
+		{ display: '描述', name: 'description',type: 'text' , width: '15%'},
 		{ display: '状态', name: 'status',type: 'text' , width: '15%',render: function (rowdata, rowindex, value)
         {
         	var h = "-";

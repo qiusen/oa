@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
 import com.dihaitech.oa.controller.action.BaseAction;
@@ -31,6 +36,8 @@ public class WorkflowApproveAction extends BaseAction {
 	private RuntimeService runtimeService;
 	
 	private TaskService taskService;
+	
+	private RepositoryService repositoryService;
 	
 	public ILeaveBillService getLeaveBillService() {
 		return leaveBillService;
@@ -56,6 +63,14 @@ public class WorkflowApproveAction extends BaseAction {
 		this.taskService = taskService;
 	}
 	
+	public RepositoryService getRepositoryService() {
+		return repositoryService;
+	}
+
+	public void setRepositoryService(RepositoryService repositoryService) {
+		this.repositoryService = repositoryService;
+	}
+
 	/* (non-Javadoc)
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
 	 */
@@ -114,6 +129,34 @@ public class WorkflowApproveAction extends BaseAction {
 		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 						.processInstanceId(task.getProcessInstanceId())
 						.singleResult();
+		
+		//批注
+		String processInstanceId = processInstance.getProcessInstanceId();
+		List<Comment> commentList = taskService.getProcessInstanceComments(processInstanceId);
+		//流程
+		long c = 0;
+		StringBuffer json = new StringBuffer("\"Rows\":[");
+		if(commentList!=null && commentList.size()>0){
+			c = commentList.size();
+			Comment commentTemp = null;
+			for(int i=0;i<commentList.size();i++){
+				commentTemp = commentList.get(i);
+				if(i>0){
+					json.append(",");
+				}
+				json.append("{\"id\":\""+commentTemp.getId()
+						+"\",\"userId\":\""+commentTemp.getUserId()
+						+"\",\"time\":\""+DateUtil.dateToString(commentTemp.getTime(), DateUtil.DATE_FORMAT_A)
+						+"\",\"message\":\""+commentTemp.getFullMessage()
+						+"\"}");
+				
+			}
+		}
+		json.append("], \"Total\":" + c);
+
+		System.out.println("Task json:::::::::::::::::::" + json);
+		this.getRequest().setAttribute("json", json.toString());
+		
 		
 		String businesskey = processInstance.getBusinessKey();
 		String business = businesskey.split("-")[0];
@@ -184,5 +227,39 @@ public class WorkflowApproveAction extends BaseAction {
 		}
 		
 		return "approveComplete";
+	}
+	
+	/**
+	 * 查看当前流程图
+	 * @return
+	 */
+	public String viewCurrentPng(){
+		String taskId = this.getRequest().getParameter("taskId");
+		Task task = taskService.createTaskQuery()
+					.taskId(taskId)
+					.singleResult();
+		//获取流程定义
+		String processDefinitionId = task.getProcessDefinitionId();
+		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()	//查询act_re_prodef表
+							.processDefinitionId(processDefinitionId)
+							.singleResult();
+		
+		this.getRequest().setAttribute("processDefinition", processDefinition);
+		
+		//画DIV
+		//先获取流程定义实体，只有流程定义实体中才有坐标信息
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(processDefinitionId);
+		
+		//根据任务ID，获取流程实例，根据流程实例获取当前活动对象ID
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+						.processInstanceId(task.getProcessInstanceId())
+						.singleResult();
+		String activityId = processInstance.getActivityId();
+		
+		//查询当前活动对象,获取坐标
+		ActivityImpl ai = processDefinitionEntity.findActivity(activityId);
+		this.getRequest().setAttribute("ai", ai);
+		
+		return "viewCurrentPng";
 	}
 }
