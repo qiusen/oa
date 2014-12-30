@@ -105,12 +105,12 @@ function completeClick(cv){
     </tr>
     <tr>
         <td align="right" class="l-table-edit-td">开始时间：</td>
-        <td align="left" class="l-table-edit-td"><input type="text" ltype="text" value="${requestScope.leaveBill.begintime}" readonly="readonly"/></td>
+        <td align="left" class="l-table-edit-td"><input type="text" ltype="text" value="<fmt:formatDate value="${requestScope.leaveBill.begintime}" pattern="yyyy-MM-dd hh:mm"/>" readonly="readonly"/></td>
         <td align="left"></td>
     </tr>
     <tr>
         <td align="right" class="l-table-edit-td">结束时间：</td>
-        <td align="left" class="l-table-edit-td"><input type="text" ltype="text" value="${requestScope.leaveBill.endtime}" readonly="readonly"/></td>
+        <td align="left" class="l-table-edit-td"><input type="text" ltype="text" value="<fmt:formatDate value="${requestScope.leaveBill.endtime}" pattern="yyyy-MM-dd hh:mm"/>" readonly="readonly"/></td>
         <td align="left"></td>
     </tr>
     <tr>
