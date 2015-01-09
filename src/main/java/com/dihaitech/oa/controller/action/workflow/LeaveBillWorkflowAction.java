@@ -320,6 +320,8 @@ public class LeaveBillWorkflowAction extends BaseAction {
 		Manager manager = (Manager)this.getSession().getAttribute("manager");
 		String assignee = manager.getEmail();
 		
+		System.out.println("assignee:::::::::::" +assignee);
+		
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("days", 6);
 		//开始流程
@@ -446,5 +448,44 @@ public class LeaveBillWorkflowAction extends BaseAction {
 		
 		//使用审批时的流程图JSP文件
 		return "viewCurrentPng";
+	}
+	
+	/**
+	 * 取消流程
+	 * 	使用删除流程机制处理
+	 * @return
+	 */
+	public String cancel(){
+		String businessKey = this.getRequest().getParameter("businessKey");
+		
+		HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
+						.processInstanceBusinessKey(businessKey)
+						.singleResult();
+		
+		
+		String processInstanceId = hpi.getId();
+		
+		//流程实例ID*********
+		System.out.println("hpi.getId()----------" + hpi.getId());
+		
+		String deleteReason = "取消流程";
+		runtimeService.deleteProcessInstance(processInstanceId, deleteReason);
+		
+		//修改状态
+		String business = businessKey.split("-")[0];
+		String bidStr = businessKey.split("-")[1];
+		if(business.equals("leaveBill")){	//请假单
+			int bid = TypeUtil.stringToInt(bidStr);
+			if(bid<=0){
+				return null;
+			}
+			LeaveBill leaveBill = new LeaveBill();
+			leaveBill.setId(bid);
+			leaveBill.setStatus(3);		//3为已取消
+			leaveBillService.editStatusById(leaveBill);
+			
+		}
+		
+		return "cancel";
 	}
 }

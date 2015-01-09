@@ -339,6 +339,11 @@
 				<param name="namespace">/admin/workflow</param>
 			</result>
 			
+			<result name="cancel" type="redirectAction">
+				<param name="actionName">leaveBillWorkflowAction</param>
+				<param name="namespace">/admin/workflow</param>
+			</result>
+			
 			<result name="viewComments" type="dispatcher">/jsp/admin/workflow/workflowComments.jsp</result>
 			<result name="viewCurrentPng" type="dispatcher">/jsp/admin/approve/viewCurrentPng.jsp</result>
 			<interceptor-ref name="common-params"/>

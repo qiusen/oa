@@ -192,7 +192,17 @@ public class WorkflowApproveAction extends BaseAction {
 		String taskId = this.getRequest().getParameter("taskId");
 		String message = this.getRequest().getParameter("message");
 		
+		
 		String cv = this.getRequest().getParameter("cv");
+
+		if(message==null ||message.trim().length()==0){
+			if(cv.equals("y")){
+				message = "同意";
+			}else{
+				message = "不同意";
+			}
+			
+		}
 		
 		Task task = taskService.createTaskQuery()
 					.taskId(taskId)
