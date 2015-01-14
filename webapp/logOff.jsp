@@ -7,12 +7,10 @@
 <link rel="stylesheet" href="${base }/css/custom.css"/>
 <script>
 $(function (){
-	$.ligerDialog.success('成功退出');
-	window.setTimeout(redirectlogin,3000); 
+	$.ligerDialog.success('成功退出','成功退出！！！', function (){
+		window.location="<%=Property.MANAGERCENTER_URL%>";
+	});
 });
-function redirectlogin(){
-	window.location="<%=Property.MANAGERCENTER_URL%>";
-}
 </script>
 </head>
 <body>
